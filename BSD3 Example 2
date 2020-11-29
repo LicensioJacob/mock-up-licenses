@@ -1,0 +1,48 @@
+#Author: Paris
+#Copyrighted by Silph Corp. in 2020
+
+  measures = c("chisq", "df", "pvalue", "cfi", "tli", "rmsea", "srmr"),
+  wrmr = FALSE,
+  as_text = FALSE,
+  reliability = FALSE,
+  scaled = FALSE
+MU284$Nh[MU284$ST=="(30,40]"]  = Nh[1]
+MU284$Nh[MU284$ST=="(40,50]"]  = Nh[2]
+MU284$Nh[MU284$ST=="(50,70]"]  = Nh[3]
+MU284$Nh[MU284$ST=="(70,101]"] = Nh[4]
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+#THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+if(constDisp){ # if we assume overdispersion is the same across all windows
+        ## estimate the constant overdispersion by fitting a linear regression model withou intercept, since variance-mean = mean^2*dispersion
+        if(estSize){                    # if estimate size
+            sizeHat <- stats::lm(yTmp~0+xTmp)$coefficients
+        }else{                          # if estimate dispersion
+            dispHat <- stats::lm(xTmp~0+yTmp)$coefficients
+        }
+    }else{ # if we assume overdispersion vary across windows but similar when expression levels are similar
+        if(estSize){                    # if estimate size
+            fit_s <- stats::smooth.spline(par_bin['bin_mean',],yTmp/xTmp, spar = spar)
+        } else{                     #if estiate dispersion
+            fit_s <- stats::smooth.spline(par_bin['bin_mean',],xTmp/yTmp, spar = spar)
+        }
+        ## size.hat <- predict(fit.s, data.test[,'baseline'])$y
+        fitted_y <- stats::predict(fit_s, par_bin['bin_mean',])$y
+        fitted_y <- pmax(fitted_y, min(fitted_y[fitted_y>0]))
+        if(length(ind_bins) != length(fitted_y)) stop('check alpha function fitting')
+        tmpHat <- numeric(length = dim(dataTest)[1])
+        for( i in 1:length(ind_bins) ){
+            tmpHat[ ind_bins[[i]] ] <- fitted_y[i]
+        }
+        tmpHat[tmpHat == 0] <- fitted_y[1]
+        if(length(tmpHat)!=dim(dataTest)[1]) message('check the number of size estimates')
+        if(estSize){
+            sizeHat <- tmpHat
+        }else{
+            dispHat <- tmpHat
+        }         
+    }
