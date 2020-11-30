@@ -1,0 +1,12 @@
+while x:
+{
+print("Meme Nice")
+}
+#Author: Brutus
+#Copyright: Jasmine Dragon Company 2000
+int num = 0
+#This File is licenced under the terms of the Zero Clause BSD License
+if num > 0: {
+num= num +1
+print("Nice Meme")
+}
