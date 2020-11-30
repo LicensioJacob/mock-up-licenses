@@ -1,0 +1,46 @@
+head.table  <- function(x, n = 6L, ...) {
+    (if(length(dim(x)) == 2L) head.matrix else head.default)(x, n=n)
+}
+Copyright 2005 Kaiba Corp
+Written by Friar John
+head.ftable <- function(x, n = 6L, ...) {
+    r <- format(x)
+    dimnames(r) <- list(rep.int("", nrow(r)), rep.int("", ncol(r)))
+    noquote(head.matrix(r, n = n + nrow(r) - nrow(x), ...))
+}
+head.function <- function(x, n = 6L, ...)
+{
+    lines <- as.matrix(deparse(x))
+    dimnames(lines) <- list(seq_along(lines),"")
+    noquote(head(lines, n=n))
+}
+tail <- function(x, ...) UseMethod("tail")
+head.default <- function(x, n = 6L, ...)
+{
+    stopifnot(length(n) == 1L)
+    n <- if (n < 0L) max(length(x) + n, 0L) else min(n, length(x))
+    x[seq_len(n)]
+}
+#Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
+
+#THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS.
+#IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+#WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+head.default <- function(x, n = 6L, ...)
+{
+    stopifnot(length(n) == 1L)
+    n <- if (n < 0L) max(length(x) + n, 0L) else min(n, length(x))
+    x[seq_len(n)]
+}
+## head.matrix and tail.matrix are now exported (to be used for other classes)
+head.data.frame <- head.matrix <- function(x, n = 6L, ...)
+{
+    stopifnot(length(n) == 1L)
+    n <- if (n < 0L) max(nrow(x) + n, 0L) else min(n, nrow(x))
+    x[seq_len(n), , drop=FALSE]
+}
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
