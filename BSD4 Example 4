@@ -1,0 +1,82 @@
+## convert nodesets to a simple list naming child elements and attributes
+node_info <- function(element_nodes){
+
+  map_dfr(element_nodes, function(nodeset){
+    names <- map_chr(nodeset, xml_attr_or, "name", "ref")
+    drop <- map_lgl(names, is.na)
+    names <- names[!drop]
+    nodeset <- nodeset[!drop]
+
+    summary <- map_chr(nodeset, get_docs, "summary")
+    details <- map_chr(nodeset, get_docs, "details")
+    attribute <- map_lgl(nodeset, function(n) xml_name(n) == "attribute")
+    tibble(names, summary, details, attribute)
+
+  }, .id = "parent")
+
+}
+#Redistribution and use in
+#source and binary forms, with or 
+#without modification, are permitted provided
+#that the following conditions are met:
+
+#1. Redistributions of source code must retain the above
+#copyright notice, this list of conditions and
+#the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright
+#notice, this list of conditions and the following disclaimer in the documentation and/or
+#other materials provided with the distribution.
+#3. All advertising materials mentioning features or use of this
+#software must display the following acknowledgement:
+#This product includes software developed by the
+#organization.
+#4. Neither the name of the copyright holder nor the names of its 
+#contributors may be used to endorse or promote products derived from this
+#software without specific prior written permission.
+#THIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDER "AS IS" AND ANY EXPRESS OR IMPLIED
+#WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+#COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+#EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+#OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+#STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY 
+#WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+get_docs <- function(node, docbit = "details"){
+  kids <- xml_children(node)
+  i <- xml_select(kids, "annotation")
+  if(length(i) > 0){
+    docs <- xml_children(xml_children(kids[[i]]))
+    j <- xml_select(docs, docbit)
+    if(length(j) > 0 ){
+      txt <- xml_text( docs[[ j ]] )
+      stringr::str_squish(txt)
+    } else {
+      ""
+    }
+  } else {
+    ""
+  }
+}
+#Author: Sebastian
+#Copyright: 2001, You've Been Gnomed!
+get_element_nodes <- function(xsd_files, group_nodes, type_nodes){
+  map(xsd_files, function(xsd){
+    xml <- read_xml(xsd)
+
+    named_elements <- xml_find_all(xml, "//xs:element[@name]")
+
+    ## Element declares a type:
+    types <- drop_prefix(map_chr(named_elements, xml_attr, "type"))
+    elements <- unname(type_nodes[types])
+    missing_type <- map_lgl(elements, is.null)
+
+    ## Element contains a type, which we recurse
+    defs <- map(named_elements, xsd_recursion, group_nodes)
+    missing_def <- map_lgl(defs, ~length(.x)< 1)
+    defs[!missing_def] <-  map(defs[!missing_def],
+                               ~xsd_recursion(.x, group_nodes, type_nodes))
+    elements[missing_type] <- defs[missing_type]
+
+    who <- map_chr(named_elements, xml_attr, "name")
+    setNames(elements, who)
