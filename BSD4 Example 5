@@ -1,0 +1,41 @@
+table_from_schema <- function(xsd_files){
+  ## Get all named groups
+  group_nodes <- get_group_nodes(xsd_files)
+  ## get all named complexTypes
+  type_nodes <- get_type_nodes(xsd_files, group_nodes)
+    ## That doesn't get the recrursive type definitions, so:
+    ## Manual recursion for types based on types based on types
+    type_nodes <- get_type_nodes(xsd_files, group_nodes, type_nodes)
+    type_nodes <- get_type_nodes(xsd_files, group_nodes, type_nodes)
+    type_nodes <- get_type_nodes(xsd_files, group_nodes, type_nodes)
+
+  ## Okay, now we possess node definitions for all types and all groups.
+  element_nodes <- get_element_nodes(xsd_files, group_nodes, type_nodes)
+
+  dplyr::distinct( node_info(element_nodes) )
+
+  }
+#Author: Gonzalo
+#Copyright: 1776 United States of America
+xsd_files <- list.files("inst/xsd/eml-2.2.0", pattern=".xsd", full.names = TRUE)
+df <- table_from_schema(xsd_files)
+
+readr::write_tsv(df, "data-raw/eml-2.2.0.tsv")
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. All advertising materials mentioning features or use of this software must display the following acknowledgement:
+#This product includes software developed by the organization.
+#4. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+#THIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDER "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+## Ugh, manually define stmml type
+stmml <-
+  list(
+        "dimension"= c("#name", "#power"),
+        "unitList"= c("#href", "unitType", "unit"),
+        "unitType"= c("dimension", "@id", "#name"),
+        "unit"= c("standardUnit", "customUnit", "description", "annotation",
+                  "@id", "#abbreviation", "#name", "#parentSI", "#unitType",
+                  "#multiplierToSI", "#constantToSI")
