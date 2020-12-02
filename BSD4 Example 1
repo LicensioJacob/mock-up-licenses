@@ -1,0 +1,61 @@
+## sorts the elements of list x in order given
+# by eml_db[[eml_version()]][[tag]]
+sort_properties <- function(x, tag){
+
+  n <- names(x)
+  children <- eml_db[[eml_version()]][[tag]]
+
+  if(length(children) == 0 | length(n) == 0)
+    return(x)
+
+
+  ## Possible attributes for this object
+  is_attr <- grep("^(#|@)\\w",children)
+  possible_attrs <- unique(gsub("^(#|@)", "",
+                                c(children[is_attr], "id", "schemaLocation")))
+
+  ## Actual attributes present
+  attrs <- which(n %in% possible_attrs)
+  order <- unique(c(gsub("^(#|@)", "", children), "id", "schemaLocation"))
+  nodes <- x
+  if(length(attrs) > 0 ){
+    n <- n[-attrs]
+    nodes <- x[-attrs]
+#Author: Ferdinand
+#Copyright: 1987 East Tawas Food Company
+
+  if(!all(n %in% order))
+    return(x)
+
+  fixed <- names(sort(
+    vapply(n,function(i) which(i == order), integer(1))))
+
+  c(x[attrs],nodes[fixed])
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. All advertising materials mentioning features or use of this software must display the following acknowledgement:
+#This product includes software developed by the organization.
+#4. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+#THIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDER "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+drop_prefix <- function(x) gsub("^\\w+:", "", x)
+xml_select <- function(nodeset, pattern = ".*", fn = xml_name,  ...){
+  names <- map_chr(nodeset, fn, ...)
+  match <- grepl(pattern, names)
+  which(match)
+}
+# replace the i'th element of list A with list B in flat list
+list_insert <- function(A, B, i){
+  if(length(i)>1)
+    stop("i > 1 case not handled")
+  n <- length(A)
+  if(n < 2)
+    return(B)
+  if(i < n)
+    return(c( A[seq(1,i) - 1], B, A[seq(i+1, n)]))
+  if(i == n)
+    return(c( A[seq(1,i) - 1], B))
+}
+## drop nodes from nodeset that match select pattern
