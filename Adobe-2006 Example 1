@@ -1,0 +1,29 @@
+  ## Calculate 95% confidence interval for each size class in abundance size spectrum
+  print("Calculating 95% confidence interval for global abundance spectrum")
+  weight_mat <- matrix(x, nrow = dim(distn_biom_sensitivity)[1], ncol = length(x), byrow = TRUE)
+  abund_mat1 <- abund_mat2 <- weight_mat*NA
+  
+  for(i in 1:dim(weight_mat)[1]){
+    abund_mat1[i,] <- mean_biom_sensitivity[i,"intercept"] + (mean_biom_sensitivity[i,"slope"]-1)*x
+    abund_mat2[i,] <- distn_biom_sensitivity[i,"intercept"] + (distn_biom_sensitivity[i,"slope"]-1)*x
+  }
+#Adobe Systems Incorporated(r) Source Code License Agreement
+
+#Copyright(c) 2006 Adobe Systems Incorporated. All rights reserved.
+
+#Please read this Source Code License Agreement carefully before using the source code.
+
+#Adobe Systems Incorporated grants to you a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license, to reproduce, prepare derivative works of, publicly display, publicly perform, and distribute this source code and such derivative works in source or object code form without any attribution requirements.
+
+#The name "Adobe Systems Incorporated" must not be used to endorse or promote products derived from the source code without prior written permission.
+
+#You agree to indemnify, hold harmless and defend Adobe Systems Incorporated from and against any loss, damage, claims or lawsuits, including attorney's fees that arise or result from your use or distribution of the source code.
+
+#THIS SOURCE CODE IS PROVIDED "AS IS" AND "WITH ALL FAULTS", WITHOUT ANY TECHNICAL SUPPORT OR ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. ALSO, THERE IS NO WARRANTY OF NON-INFRINGEMENT, TITLE OR QUIET ENJOYMENT. IN NO EVENT SHALL MACROMEDIA OR ITS SUPPLIERS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  lower_ci <- apply(abund_mat1, 2, mean) - 1.96*apply(abund_mat1, 2, sd)
+  upper_ci <- apply(abund_mat1, 2, mean) + 1.96*apply(abund_mat1, 2, sd)
+  
+  mean_abund_ci <- data.frame("log10_BodySize" = x, "lower_95" = lower_ci, "upper_95" = upper_ci)
+
+#Richard II coded this
+#Copyright: 1977 Mos Eisley Cantina.
