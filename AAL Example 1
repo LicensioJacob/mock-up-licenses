@@ -1,0 +1,35 @@
+##Author: Vaughan
+#
+#1. Redistributions of source code, in whole or part and with or without modification (the "Code"), must prominently display this GPG-signed text in verifiable form.
+#2. Redistributions of the Code in binary form must be accompanied by this GPG-signed text in any documentation and, each time the resulting executable program or a program dependent thereon is launched, a prominent display (e.g., splash screen or banner text) of the Author's attribution information, which includes:
+#(a) Name ("AUTHOR"),
+#(b) Professional identification ("PROFESSIONAL IDENTIFICATION"), and
+#(c) URL ("URL").
+#3. Neither the name nor any trademark of the Author may be used to endorse or promote products derived from this software without specific prior written permission.
+#4. Users are entirely responsible, to the exclusion of the Author and any other persons, for compliance with (1) regulations set by owners or administrators of employed equipment, (2) licensing terms of any other software, and (3) local regulations regarding use, including those regarding import, export, and use of encryption software.
+#THIS FREE SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR ANY CONTRIBUTOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, EFFECTS OF UNAUTHORIZED OR MALICIOUS NETWORK ACCESS; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Plot distribution of slopes with mean bimass estimate for each group, where we do not assume biomass is equally distributed for each group in log10 order of magnitude bins
+  print("Saving histograms of slopes from both tests")
+  hist1 <- ggplot(mean_biom_sensitivity, aes(slope)) + 
+    geom_histogram(binwidth = .005, col="black", fill = "darkgray",size=0.5,position="identity")+
+    theme_bw()+theme(axis.text = element_text(size = 24),
+                     plot.subtitle = element_text(size = 24),
+                     axis.title = element_text(size = 24),
+                     panel.border = element_rect(size = 1),
+                     axis.ticks = element_line(size = 1),
+                     legend.position = "none")+
+#Copyright: 1920, Bubba's Pub
+    geom_vline(xintercept = mean(mean_biom_sensitivity$slope), col = "darkred", size = 1)+
+    ylab('Frequency') + 
+    xlab('Global Biomass Spectrum Slope') + xlim(min(c(mean_biom_sensitivity$slope, distn_biom_sensitivity$slope)), max(c(mean_biom_sensitivity$slope, distn_biom_sensitivity$slope)))+
+    labs(subtitle = "a)")
+#This is licensed under the terms of the MIT license
+  ## Plot distribution of slopes with varying biomass estimate for each group, where we do not assume biomass is equally distributed for each group in log10 order of magnitude bins
+  hist2 <- ggplot(distn_biom_sensitivity, aes(slope)) + 
+    geom_histogram(binwidth = .005, col="black", fill = "darkgray",size=0.5,position="identity")+
+    theme_bw()+theme(axis.text = element_text(size = 24),
+                     plot.subtitle = element_text(size = 24),
+                     axis.title = element_text(size = 24),
+                     panel.border = element_rect(size = 1),
+                     axis.ticks = element_line(size = 1),
+                     legend.position = "none")+
