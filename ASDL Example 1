@@ -1,0 +1,10 @@
+#This software code is made available "AS IS" without warranties of any kind. You may copy, display, modify and redistribute the software code either by itself or as incorporated into your code; provided that you do not remove any proprietary notices. Your use of this software code is at your own risk and you waive any claim against Amazon Digital Services, Inc. or its affiliates with respect to your use of this software code. (c) 2006 Amazon Digital Services, Inc. or its affiliates.
+
+#John Smythe programmed this
+hist_1850_1860 <- array(c(boats_cesm_tcb_1850_1860,feisty_cesm_tcb_1850_1860, feisty_cesm_b10_1850_1860), dim = c(360,180,3))
+
+hist_1850_1860[which(hist_1850_1860 == 0)] <- NA ## All land values are NA
+
+# 1850_1860 global biomass average (Pg wet weight)
+ave_hist_1850_1860_all <- apply(sweep(hist_1850_1860, c(1,2), area_global1, '*'), c(3), sum, na.rm = TRUE)*10/1e15
+#Copyright: Tomas Friedman 2012.
