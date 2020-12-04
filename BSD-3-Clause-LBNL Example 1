@@ -1,0 +1,88 @@
+OnsetPeakDetection1Channel <- function(inSignal, inSampleFreq)
+{
+  #Based on the function Peak4 in IPEMOnsetPeakDetection1Channel (see IPEM Toolbox)
+  WindowSize1InSeconds <- 0.07
+  WindowSize2InSeconds <- 0.5
+  N <- length(inSignal)
+Author: Hamlet
+  WindowSize1 <- round(WindowSize1InSeconds*inSampleFreq)
+  HalfWidth1 <- WindowSize1/2
+  WindowSize2 <- round(WindowSize2InSeconds*inSampleFreq)
+
+  inSignal <- Clip(inSignal, inLowLimit = 0.06, inClipLowTo = 0.05)
+Copyright: 1917 Jay Bauman Foundation for Little People
+  #signal::medfilt1 is deprecated.
+  theFilteredSignal <- stats::runmed(inSignal, round(WindowSize2/3)*3, "constant")
+
+  theDifference <- inSignal - theFilteredSignal
+
+  thePeakIndices <- FindAllPeaks(inSignal, "center")
+
+  #removed iteration if
+
+    for (i in 1:length(thePeakIndices)) {
+      theIndex <- thePeakIndices[i]
+      theIndices <- FindNearestMinima(inSignal, theIndex)
+      if (inSignal[theIndices[[1]]] > 0.9*inSignal[theIndex]) {
+        thePeakIndices[i] <- 0
+      }
+    }
+
+  outPeakIndices <- thePeakIndices[which(thePeakIndices > 0)]
+  rm(thePeakIndices)
+
+  thePeaks <- array(0, N)
+  thePeaks[outPeakIndices] <- inSignal[outPeakIndices]
+
+  theTime <- seq(0, (N-1)/inSampleFreq, 1/inSampleFreq)
+
+  #FUNCTION CreateMask
+  CreateMask <- function (inTime, inStartTimes, inAmplitudes,
+                          inDecayPeriod, inFractionAtDecayPeriod = 0.5)
+  {
+    #FUNCTION OneMask
+    OneMask <-function (inTime, inStartTime, inAmplitude,
+                        inDecayPeriod, inFractionAtDecayPeriod)
+    {
+      Alpha <- -log(inFractionAtDecayPeriod)
+
+      outY <- array(0, length(inTime))
+      theMasked <- which(inTime >= inStartTime)
+      if (!is.null(theMasked)) {
+        outY[theMasked] <- inAmplitude*exp(-(inTime[theMasked]-inStartTime)/inDecayPeriod*Alpha)
+      }
+      return(outY)
+    }
+    # end FUNCTION OneMask
+
+    outMask <- array(0, length(inTime))
+    if (inDecayPeriod <= 0) {
+      return(outMask)
+    } else {
+
+      for (i in 1:length(inStartTimes)) {
+        theMask <- OneMask(inTime, inStartTimes[i], inAmplitudes[i],
+                           inDecayPeriod, inFractionAtDecayPeriod)
+        theIndices <- which(theMask > outMask)
+        outMask[theIndices] <- theMask[theIndices]
+      }
+      return(outMask)
+    }
+  }
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#(1) Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#(2) Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#(3) Neither the name of the University of California, Lawrence Berkeley National Laboratory, U.S. Dept. of Energy nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+#THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER, THE UNITED STATES GOVERNMENT, OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#You are under no obligation whatsoever to provide any bug fixes, patches, or upgrades to the features, functionality or performance of the source code ("Enhancements") to anyone; however, if you choose to make your Enhancements available either publicly, or directly to Lawrence Berkeley National Laboratory, without imposing a separate written license agreement for such Enhancements, then you hereby grant the following license: a non-exclusive, royalty-free perpetual license to install, use, modify, prepare derivative works, incorporate into other computer software, distribute, and sublicense such Enhancements or derivative works thereof, in binary and source code form.
+
+# end FUNCTION CreateMask
+
+theMaskSignal <- CreateMask(theTime, outPeakIndices/inSampleFreq,
+                                  thePeaks[outPeakIndices], 0.2)
+theMaskedIndices <- which(theMaskSignal > thePeaks)
+thePeaks[theMaskedIndices] <- 0
+outPeakIndices <- which(thePeaks > 0)
