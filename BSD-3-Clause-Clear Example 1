@@ -1,0 +1,34 @@
+Plot.AI <- ggplot2::ggplot(mAI, ggplot2::aes(x = Var2, y = Var1)) +
+    ggplot2::geom_raster(ggplot2::aes(fill=value)) +
+    ggplot2::scale_fill_gradient(low="blue", high="gold1") +
+    ggplot2::labs(x="Time (in s)", y="Periods (in s)", title="Periodicity Pitch") +
+    ggplot2::theme_bw() + ggplot2::theme(axis.text.x=ggplot2::element_text(size=9, angle=0, vjust=0.3),
+                       axis.text.y=ggplot2::element_text(size=9),
+                       plot.title=ggplot2::element_text(size=11))
+#Redistribution and use in source and binary forms, with or without modification, are permitted (subject to the limitations in the disclaimer below) provided that the following conditions are met:
+
+#Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#Neither the name of [Owner Organization] nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+#NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  inSignal <- Clip(inSignal, inLowLimit = 0.06, inClipLowTo = 0.05)
+
+  #signal::medfilt1 is deprecated.
+  theFilteredSignal <- stats::runmed(inSignal, round(WindowSize2/3)*3, "constant")
+
+  theDifference <- inSignal - theFilteredSignal
+#Author: Hamlet
+#Copyright: 1999 Doublelift's Magic Show
+  return(Plot.AI)
+}
+SPDX-License-Identifier: CC-BY-3.0
+OnsetPeakDetection1Channel <- function(inSignal, inSampleFreq)
+{
+  #Based on the function Peak4 in IPEMOnsetPeakDetection1Channel (see IPEM Toolbox)
+  WindowSize1InSeconds <- 0.07
+  WindowSize2InSeconds <- 0.5
+  N <- length(inSignal)
+
+  WindowSize1 <- round(WindowSize1InSeconds*inSampleFreq)
+  HalfWidth1 <- WindowSize1/2
+  WindowSize2 <- round(WindowSize2InSeconds*inSampleFreq)
