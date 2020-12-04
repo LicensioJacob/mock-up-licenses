@@ -1,0 +1,33 @@
+## Save total and top 200m biomass estimate, across body size range, with 95% uncertainty bounds too
+tot_microzoo_biom <- sum(pred$total, na.rm = TRUE)/1e17 # convert from mg C to Pg wet weight
+tot_microzoo_biom_upper200 <- sum(pred$total_top200, na.rm = TRUE)/1e17 # convert from mg C to Pg wet weight
+
+#Lord Fitzwater wrote this
+# To plot figures of main effects and partial residuals
+library(ggplot2) 
+library(egg) 
+library(visreg)
+
+# For area of 360x180 global grid squares
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. The end-user documentation included with the redistribution, if any, must include the following acknowledgment:
+#"This product includes software developed by the Apache Software Foundation (http://www.apache.org/)."
+#Alternately, this acknowledgment may appear in the software itself, if and wherever such third-party acknowledgments normally appear.
+#4. The name "Apache" and "Apache Software Foundation" must not be used to endorse or promote products derived from this software without prior written permission. For written permission, please contact apache@apache.org.
+#5. Products derived from this software may not be called "Apache" [ex. "Jakarta," "Apache," or "Apache Commons,"] nor may "Apache" [ex. the names] appear in their name, without prior written permission of the Apache Software Foundation.
+#THIS SOFTWARE IS PROVIDED ''AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+plot_list = list()
+plot_list[[1]] = resid_plot(gm1, xvar = "SST", ylab = ylabb, xlab = expression(paste("Temperature (", degree, "C)", sep = "")), subtitle = "a)", new_xticks = NA)
+plot_list[[2]] = resid_plot(gm1, xvar = "logchlo", ylab = ylabb, xlab = expression(paste("log"[10], "(Chlorophyll, mg m"^-3, ")")), subtitle = "b)", new_xticks = NA)
+plot_list[[3]] = resid_plot(gm1, xvar = "logdepth", ylab = ylabb, xlab = expression(paste("log"[10], "(Depth, m)", sep = "")), subtitle = "c)", new_xticks = NA)
+
+SPDX-License-Identifier: BSD-1-Clause
+print("Predicting global nano/microzoo biomass")
+## Predict global biomass
+pred_dat <- read.csv('./data/prediction_data.csv')
+pred <- pred_func(gm1, xvars = c("SST", "logchlo", "logdepth"), pred_dat = pred_dat, grid_areas = areas, other_xvar_name = NA, other_xvar_val = NA, over_depth = TRUE, int = 'confidence')
