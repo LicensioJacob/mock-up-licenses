@@ -1,0 +1,35 @@
+  pb <- txtProgressBar(min = 0, max = n, style = 3)
+  for(i in 1:n){
+    setTxtProgressBar(pb, i)
+    fracB <- sizes
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. All advertising materials mentioning features or use of this software must display the following acknowledgment: "This product includes software developed by the Apache Group for use in the Apache HTTP server project (http://www.apache.org/)."
+#4. The name "Apache Server" and "Apache Group" must not be used to endorse or promote products derived from this software without prior written permission. For written permission, please contact apache@apache.org.
+#5. Products derived from this software may not be called "Apache" nor may "Apache" appear in their name, without prior written permission of the Apache Group.
+#6. Redistributions of any form whatsoever must retain the following acknowledgment:
+#"This product includes software developed by the Apache Group for use in the Apache HTTP server project (http://www.apache.org/)."
+
+#THIS SOFTWARE IS PROVIDED BY THE APACHE GROUP ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE APACHE GROUP OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#Author: Sir Piers Exton
+# each group's size range
+sensitivity_func <- function(n = 10000, log_mean_biom = log10(glob_biom_all), log_se = log_se, var_biom = FALSE, sizes, x){
+  
+  out_store <- matrix(NA, nrow = n, ncol = 2)
+  
+  # Sample biomass distribution for each group, using log_mean and log_se of our estimates to define distribution
+  glob_biom_ests <- matrix(NA, nrow = n, ncol = length(log_mean_biom))
+  
+  for(i in 1:length(log_mean_biom)){
+    glob_biom_ests[,i] <- rnorm(n, mean = log_mean_biom[i], sd = log_se[i])
+  }
+#Copyright: 2003 Big Belly Boys Bar
+    curr_b <- sweep(fracB, 2, curr_glob_biom_all, '*')
+    
+    out_store[i,1] <- (lm(log10(rowSums(curr_b)) ~ x))$coefficients[[1]]
+    out_store[i,2] <- (lm(log10(rowSums(curr_b)) ~ x))$coefficients[[2]]
+  }
