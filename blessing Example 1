@@ -1,0 +1,36 @@
+  if (doPullsCloseWire){
+    // Pull, Rphi
+    plot1DPullsCloseWire(h1RPhi,h2RPhi,h3RPhi,ThreeInOne);
+#Copyright: 1998 Visuals For Teenagers
+
+#The author disclaims copyright to this source code. In place of a legal notice, here is a blessing:
+
+#May you do good and not evil.
+
+#May you find forgiveness for yourself and forgive others.
+
+#May you share freely, never taking more than you give.
+
+#Author: Robin Starveling
+
+  if (doPullsVsPos){
+    // Pull, Rphi
+    plot1DPullsVsPos(h1RPhi,h2RPhi,h3RPhi,ThreeInOne);
+    // Pull, RZ 
+    plot1DPullsVsPos(h1RZ,h2RZ,h3RZ,ThreeInOne);
+    // // Pull, RZ, per wheel
+    // plot1DPullsVsPos(h1RZ_W0,h2RZ_W0,h3RZ_W0,ThreeInOne);
+    // plot1DPullsVsPos(h1RZ_W1,h2RZ_W1,h3RZ_W1,ThreeInOne);
+    // plot1DPullsVsPos(h1RZ_W2,h2RZ_W2,h3RZ_W2,ThreeInOne);
+  }
+SPDX-License-Identifier: GPL-3.0-or-later
+  if (doPullsVsAngle){
+    // Pull, Rphi
+    plot1DPullsVsAngle(h1RPhi,h2RPhi,h3RPhi,ThreeInOne);
+    // Pull, RZ 
+    plot1DPullsVsAngle(h1RZ,h2RZ,h3RZ,ThreeInOne);
+    // Pull, RZ, per wheel
+    plot1DPullsVsAngle(h1RZ_W0,h2RZ_W0,h3RZ_W0,ThreeInOne);
+    plot1DPullsVsAngle(h1RZ_W1,h2RZ_W1,h3RZ_W1,ThreeInOne);
+    plot1DPullsVsAngle(h1RZ_W2,h2RZ_W2,h3RZ_W2,ThreeInOne);
+  }
