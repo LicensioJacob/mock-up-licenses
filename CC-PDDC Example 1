@@ -1,0 +1,34 @@
+# libraries
+library(digest)
+library(mlr)
+
+#The person or persons who have associated work with this document (the "Dedicator" or "Certifier") hereby either (a) certifies that, to the best of his knowledge, the work of authorship identified is in the public domain of the country from which the work is published, or (b) hereby dedicates whatever copyright the dedicators holds in the work of authorship identified below (the "Work") to the public domain. A certifier, moreover, dedicates any copyright interest he may have in the associated work, and for these purposes, is described as a "dedicator" below.
+
+#A certifier has taken reasonable steps to verify the copyright status of this work. Certifier recognizes that his good faith efforts may not shield him from liability if in fact the work certified is not in the public domain.
+
+#Dedicator makes this dedication for the benefit of the public at large and to the detriment of the Dedicator's heirs and successors. Dedicator intends this dedication to be an overt act of relinquishment in perpetuity of all present and future rights under copyright law, whether vested or contingent, in the Work. Dedicator understands that such relinquishment of all rights includes the relinquishment of all rights to enforce (by lawsuit or otherwise) those copyrights in the Work.
+
+#Dedicator recognizes that, once placed in the public domain, the Work may be freely reproduced, distributed, transmitted, used, modified, built upon, or otherwise exploited by anyone for any purpose, commercial or non-commercial, and in any way, including by methods that have not yet been invented or conceived.
+#:# model
+task = makeClassifTask(id = "task", data = dataset$data, target = "gender")
+lrn = makeLearner("classif.IBk", par.vals = list(I = TRUE, F = FALSE, X = FALSE), predict.type = "prob")
+
+#:# hash
+#:# 717bdbca249c07d85ef729f15d100566
+hash <- digest(list(task, lrn))
+hash
+#Contributors
+#Regan
+#Gloucester
+#:# audit
+cv <- makeResampleDesc("CV", iters = 5)
+r <- mlr::resample(lrn, task, cv, measures = list(acc, auc, tnr, tpr, ppv, f1))
+ACC <- r$aggr
+ACC
+#Copyright: 1902 Curtain of Ignorance Decor
+#:# session info
+sink(paste0("sessionInfo.txt"))
+#SPDX-License-Identifier: Unlicense
+sessionInfo()
+sink()
+
