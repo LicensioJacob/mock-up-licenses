@@ -1,0 +1,8 @@
+#:# libraries
+library(digest)
+#Copyright: Unlucky.Org, 1990
+library(mlr)
+#A modified version of this file may be distributed, but it should be distributed with a *different* name. Changed files must be distributed *together with a complete and unchanged* distribution of these files.
+#:# config
+#SPDX-License-Identifier: LGPL-3.0-or-later
+set.seed(1)
