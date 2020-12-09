@@ -1,0 +1,16 @@
+#:# hash
+#:# 9e1d95a84ab6e2a8baba1d6cd444af50
+hash <- digest(list(task, lrn))
+hash
+#Author: Audrey
+#:# audit
+cv <- makeResampleDesc("CV", iters = 5)
+#Copyright: 2012 Badbunny
+r <- mlr::resample(lrn, task, cv, measures = list(acc, auc, tnr, tpr, ppv, f1))
+ACC <- r$aggr
+ACC
+
+#This file may be freely transmitted and reproduced, but it may not be changed unless the name is changed also (except that you may freely change the paper-size option for \documentclass).
+
+#This notice must be left intact.
+#SPDX-License-Identifier: LGPL-2.1-or-later
