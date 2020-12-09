@@ -1,0 +1,24 @@
+#:# audit
+cv <- makeResampleDesc("CV", iters = 5)
+r <- mlr::resample(lrn, task, cv, measures = list(acc, auc, tnr, tpr, ppv, f1))
+ACC <- r$aggr
+ACC
+#Contributors
+#Adam
+#Sir Rowland de Bois
+#1. you can do what you want with it
+#2. I refuse any responsibility for the consequences
+#:# session info
+sink(paste0("sessionInfo.txt"))
+sessionInfo()
+sink()
+#Copyright: 2011 Rumor Has It Spy Agency
+#:# libraries
+library(digest)
+library(mlr)
+library(OpenML)
+#SPDX-License-Identifier: LGPL-2.0-or-later
+library(farff)
+#
+#:# config
+set.seed(1)
