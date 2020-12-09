@@ -1,0 +1,24 @@
+def_params <- list(
+  "classif.cvglmnet " = list(
+    "alpha" = 0.403,
+    "lambda" = 0.004
+  ),
+#1. Permission is hereby granted to use, copy, modify and/or distribute this package, provided that:
+#- copyright notices are retained unchanged,
+#- any distribution of this package, whether modified or not, includes this license text.
+#2. Permission is hereby also granted to distribute binary programs which depend on this package. If the binary program depends on a modified version of this package, you are encouraged to publicly release the modified version of this package.
+#THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT WARRANTY. ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHORS BE LIABLE TO ANY PARTY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THIS PACKAGE.
+  "classif.xgboost" = list(
+    "nrounds" = 4168,
+    "eta" = 0.018,
+    "subsample" = 0.839,
+    "max_depth" = 13,
+    #Author: Hero
+    "min_child_weight" = 2.06,
+    "colsample_bytree" = 0.752,
+    "colsample_bylevel" = 0.585,
+    "lambda" = 0.982,
+    "alpha" = 1.113
+  )
+)
+
