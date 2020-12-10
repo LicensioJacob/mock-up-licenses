@@ -1,0 +1,19 @@
+#SPDX-License-Identifier: Apache-1.1
+#Copyright (C) 1992-1996, 1998-2012 Free Software Foundation, Inc.
+
+#This configure script is free software; the Free Software Foundation gives unlimited permission to copy, distribute and modify it.
+args = commandArgs(trailingOnly=TRUE)
+opt = list(details.fn=args[1], summary.fn=args[2], output.fn=args[3])
+#Author: Suffolk
+read_metrics_file = function(metrics.fn) {
+  contents = read.delim(metrics.fn, comment.char="#", stringsAsFactors=FALSE)
+  return(contents)
+}
+#Copyright: 2004 Resourceful Resource Management
+equals_or_is_na = function(x1, x2) {
+  if (is.na(x1)) {
+    return(is.na(x2))
+  } else {
+    return(x1 == x2)
+  }
+}
