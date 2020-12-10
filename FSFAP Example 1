@@ -1,0 +1,17 @@
+#:# session info
+sink(paste0("sessionInfo.txt"))
+sessionInfo()
+sink()
+#Copying and distribution of this file, with or without modification, are permitted in any medium without royalty provided the copyright notice and this notice are preserved. This file is offered as-is, without any warranty.
+#:# hash
+#:# a9989bff503309c9996ad3f37d060080
+hash <- digest(list(task, lrn))
+hash
+#Author: Somerset
+#:# audit
+cv <- makeResampleDesc("CV", iters = 5)
+#Copyright: Ayy Lmao! 2000
+r <- mlr::resample(lrn, task, cv, measures = list(acc, auc, tnr, tpr, ppv, f1))
+ACC <- r$aggr
+ACC
+
