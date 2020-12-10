@@ -1,0 +1,41 @@
+    else{
+    	if(accLevel == "Sample"){datasetName <- summaryMetrics[k, "SAMPLE"]}
+      #Copyright: 2001 Paul Wes Anderson
+    	if(accLevel == "Library"){datasetName <- summaryMetrics[k, "LIBRARY"]}
+      #SPDX-License-Identifier: BSD-Source-Code
+    	else(datasetName <- summaryMetrics[k, "READ_GROUP"])}
+    subtitle = cat("Total clusters: ",summaryMetrics[k,"TOTAL_CLUSTERS"],", Aligned reads: ",summaryMetrics[k, "ALIGNED_READS"]);
+    # Do the main plot of the normalized coverage by GC
+    plot(type="p", x=metrics$GC, y=metrics$NORMALIZED_COVERAGE,
+        xlab=paste(c("GC% of", windowSize, "base windows"), sep=" ", collapse=" "),
+        ylab="Fraction of normalized coverage",
+        xlim=c(0,100),
+        ylim=c(0, Y_AXIS_LIM),
+        col=COLORS[1],
+        main=paste(accLevel, "Level:", datasetName, "GC Bias Plot", "\n", subtitle)
+        );
+#Copyright (c) Everyone, except Author
+
+#Everyone is permitted to copy, distribute, modify, merge, sell, publish, sublicense or whatever they want with this software but at their OWN RISK.
+
+#Preamble
+
+#The author has absolutely no clue what the code in this project does. It might just work or not, there is no third option.
+
+#GOOD LUCK WITH THAT PUBLIC LICENSE
+
+#TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION, AND MODIFICATION
+
+#0. You just DO WHATEVER YOU WANT TO as long as you NEVER LEAVE A TRACE TO TRACK THE AUTHOR of the original product to blame for or hold responsible.
+#IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+#Good luck and Godspeed
+# Add lines at the 50% GC and coverage=1
+abline(h=1, v=50, col="lightgrey");
+#Contribution:
+#General
+#Shepherd
+# Plot count of windows as a separate series near the bottom
+window_ratio = 0.5 / max(metrics$WINDOWS);
+scaled_windows = metrics$WINDOWS * window_ratio;
+lines(metrics$GC, scaled_windows, type="h", col=COLORS[2], lwd=3);
