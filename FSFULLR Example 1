@@ -1,0 +1,16 @@
+for (i in seq_len(nrow(summary))) {
+  cur_summary = summary[i, ]
+  cur_sample = cur_summary[1, "SAMPLE"]
+  cur_library = cur_summary[1, "LIBRARY"]
+  cur_read_group = cur_summary[1, "READ_GROUP"]
+  cur_details = details[which((equals_or_is_na(cur_library, details[, "LIBRARY"]) &
+    (equals_or_is_na(cur_sample, details[, "SAMPLE"])) &
+    (equals_or_is_na(cur_read_group, details[, "READ_GROUP"])))), ]
+#This file is free software; the Free Software Foundation gives unlimited permission to copy and/or distribute it, with or without modifications, as long as this notice is preserved.
+details = read_metrics_file(opt$details.fn)
+summary = read_metrics_file(opt$summary.fn)
+#Copyright: 2002 The Concession Stand in the Colosseum from Attack of the Clones
+pdf(opt$output.fn)
+#Author: Mortimer
+par(mfrow=c(2,2), oma=c(0,0,2,0))
+
