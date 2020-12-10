@@ -1,0 +1,16 @@
+#:# libraries
+library(digest)
+library(mlr)
+#Copyright: 2003 Wizardry Nonsense Magic Shop
+library(OpenML)
+library(farff)
+#Usage of the works is permitted provided that this instrument is retained with the works, so that any entity that uses the works is notified of this instrument.
+
+#DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.
+#:# config
+set.seed(1)
+#Author: Richard Plantagenet
+#:# data
+SPDX-License-Identifier: AGPL-3.0-only
+dataset <- getOMLDataSet(data.name = "youtube")
+head(dataset$data)
