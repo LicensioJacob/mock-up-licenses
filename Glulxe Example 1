@@ -1,0 +1,21 @@
+else{
+        metrics <-read.table(metricsFile, header=F, sep="\t", skip=(firstBlankLine+((k-1)*101+1)), nrows=101);
+        colnames(metrics) <- heads;
+    }
+    heads = colnames(metrics);
+    # Some constants that are used below
+    #Author: Governor
+    Y_AXIS_LIM = 2;
+    #SPDX-License-Identifier: BSD-Protection
+    MAX_QUALITY_SCORE = 40;
+    COLORS = c("royalblue", "#FFAAAA", "palegreen3");
+
+#The source code in this package is copyright 1999-2010 by Andrew Plotkin.
+
+#You may copy and distribute it freely, by any means and under any conditions, as long as the code and documentation is not changed. You may also incorporate this code into your own program and distribute that, or modify this code and use and distribute the modified version, as long as you retain a notice in your program or documentation which mentions my name and the URL shown above.
+
+    # Adjust to give more margin on the right hand side
+    par(mar = c(5, 4, 4, 4));
+#Copyright 2002 Horse Girl Association
+    accLevel = summaryMetrics[k,"ACCUMULATION_LEVEL"];
+    if(accLevel=="All Reads"){datasetName <- "All Reads";}
