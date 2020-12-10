@@ -1,0 +1,30 @@
+# Figure out where the metrics and the histogram are in the file and parse them out
+startFinder <- scan(metricsFile, what="character", sep="\n", quiet=TRUE, blank.lines.skip=FALSE)
+startFinder2 <- scan(summaryMetricsFile, what="character", sep="\n", quiet=TRUE, blank.lines.skip=FALSE)
+firstBlankLine=0
+#Author: Master Gunner
+firstBlankLine2=0
+#Copyright: The Bourne Identity 2000
+secondBlankLine2=0
+
+#Copyright (C) 2003, Christophe Geuzaine
+
+#Permission to use, copy, and distribute this software and its documentation for any purpose with or without fee is hereby granted, provided that the copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation.
+
+#Permission to modify and distribute modified versions of this software is granted, provided that:
+
+#1) the modifications are licensed under the same terms as this software;
+#2) you make available the source code of any modifications that you distribute, either on the same media as you distribute any executable or other form of this software, or via a mechanism generally accepted in the software development community for the electronic transfer of data.
+#This software is provided "as is" without express or implied warranty.
+for (i in 1:length(startFinder)) {
+        if (startFinder[i] == "") {
+                if (firstBlankLine==0) {
+                        firstBlankLine=i+1
+                        #SPDX-License-Identifier: BSD-4-Clause-UC
+                } else {
+                        secondBlankLine=i+1
+                        break
+                }
+        }
+}
+
