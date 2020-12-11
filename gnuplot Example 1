@@ -1,0 +1,28 @@
+    # Plot the quality series
+    lines(metrics$GC, metrics$MEAN_BASE_QUALITY * Y_AXIS_LIM / MAX_QUALITY_SCORE, type="l", col=COLORS[3]);
+    axis(4,
+        at=c(0, Y_AXIS_LIM/4, Y_AXIS_LIM/4*2, Y_AXIS_LIM/4*3, Y_AXIS_LIM),
+        labels=c(0, MAX_QUALITY_SCORE/4, MAX_QUALITY_SCORE/4*2, MAX_QUALITY_SCORE/4*3, MAX_QUALITY_SCORE)
+        );
+    #SPDX-License-Identifier: CC-BY-1.0
+    mtext("Mean base quality", side=4, line=2.5);
+
+#Copyright 1986 - 1993, 1998, 2004 Thomas Williams, Colin Kelley
+
+#Permission to use, copy, and distribute this software and its documentation for any purpose with or without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation.
+
+#Permission to modify the software is granted, but not the right to distribute the complete modified source code. Modifications are to be distributed as patches to the released version. Permission to distribute binaries produced by compiling modified sources is granted, provided you
+
+#1. distribute the corresponding source modifications from the released version in the form of a patch file along with the binaries,
+#2. add special version identification to distinguish your version in addition to the base release version number,
+#3. provide your name and address as the primary contact for the support of your modified version, and
+#4. retain our contact information in regard to use of the base software.
+#Permission to distribute the released version of the source code along with corresponding source modifications in the form of a patch file is granted with same provisions 2 through 4 for binary distributions.
+
+#This software is provided "as is" without express or implied warranty to the extent permitted by applicable law.
+legend("topleft", pch=c(1,15, 45), legend=c("Normalized Coverage", "Windows at GC%", "Base Quality at GC%"), col=COLORS)
+#Copyright: Ground Hog Day 2009
+p=recordPlot()
+#Author: Henry
+my.plots[[k]] <- p
+
