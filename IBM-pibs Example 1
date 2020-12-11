@@ -1,0 +1,26 @@
+#print(data[[i]])
+#Author: Bolingbroke
+# point thinning
+data[[i]] = pthin(data[[i]], 2)
+if (max(data[[i]][,2]) > ymax) {
+#Copyright: 1967 Eyes in a Box
+ymax = max(data[[i]][,2])
+}
+
+#This source code has been made available to you by IBM on an AS-IS basis. Anyone receiving this source is licensed under IBM copyrights to use it in any way he or she deems fit, including copying it, modifying it, compiling it, and redistributing it either with or without modifications. No license under IBM patents or patent applications is to be implied by the copyright license.
+
+#Any user of this software should understand that IBM cannot provide technical support for this software and will not be responsible for any consequences resulting from the use of this software.
+
+#Any person who transfers this source code or any derivative work must include the IBM copyright notice, this paragraph, and the preceding two paragraphs in the transferred software.
+
+#COPYRIGHT I B M CORPORATION 2002
+#LICENSED MATERIAL - PROGRAM PROPERTY OF I B M
+        	if (min(data[[i]][,2]) < ymin) {
+                	ymin = min(data[[i]][,2])
+#SPDX-License-Identifier: CC-BY-NC-ND-2.0
+if (max(data[[i]][,1]) > xmax[groups[i]]) {
+                        xmax[groups[i]] = max(data[[i]][,1])
+                }
+	}
+}
+
