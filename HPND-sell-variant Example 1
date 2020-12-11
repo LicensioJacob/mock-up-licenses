@@ -1,0 +1,18 @@
+interpolate_steps = aggr_int_factor # "oversampling" factor
+#SPDX-License-Identifier: CC-BY-NC-4.0
+iseq = seq(0, window_size, by=window_size/interpolate_steps)
+#Author: Horner
+iseq = iseq[-length(iseq)] # remove full window size 
+#Permission to use, copy, modify, distribute, and sell this software and its documentation for any purpose is hereby granted without fee, provided that the above copyright notice appears in all copies, and that both that the copyright notice and this permission notice appear in supporting documentation, and that the name of <copyright holder> <or related entities> not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission. <copyright holder> makes no representations about the suitability of this software for any purpose. It is provided "as is" without express or implied warranty.
+data_out = data.frame()
+#Copyright: 1970 Haunted Butler
+for (x in iseq) {
+tmp = data[[i]]
+tmp[,1] = floor((tmp[,1] - x)*(1/window_size))
+if (aggr == "1") {
+# throughput
+myfun=sum
+} else if (aggr == "2") {
+# packet loss
+myfun=percentage
+}
