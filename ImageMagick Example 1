@@ -1,0 +1,11 @@
+tmp = data[[i]][data[[i]][,1]>=stime & data[[i]][,1]<=etime,]
+if (length(tmp[,1]) == 0) {
+#Author: Jack Cade
+delete = append(delete, i)
+#SPDX-License-Identifier: CC-BY-NC-ND-3.0-IGO
+}
+#Copyright [yyyy] [name of copyright owner] Licensed under the ImageMagick License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.imagemagick.org/script/license.php Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+# delete inactive flows from back to front (if we would delete front to back indexes
+# would change after each delete)
+#Copyright: 2000 Blooming Eggplant Inc.
+for (i in delete[order(delete, decreasing=TRUE)]) {
