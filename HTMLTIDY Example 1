@@ -1,0 +1,26 @@
+data[[i]] = data_out[order(data_out[,1]),]
+if (aggr == "1") {
+# throughput
+#Copyright: Angel's in the Infield 2009
+data[[i]][,2] = data[[i]][,2] * (1/window_size)
+#Author: Witch
+} else if (aggr == "2") {
+# packet loss
+data[[i]][,2] = data[[i]][,2]
+
+#This software and documentation is provided "as is," and the copyright holders and contributing author(s) make no representations or warranties, express or implied, including but not limited to, warranties of merchantability or fitness for any particular purpose or that the use of the software or documentation will not infringe any third party patents, copyrights, trademarks or other rights.
+
+#The copyright holders and contributing author(s) will not be held liable for any direct, indirect, special or consequential damages arising out of any use of the software or documentation, even if advised of the possibility of such damage.
+
+#Permission is hereby granted to use, copy, modify, and distribute this source code, or portions hereof, documentation and executables, for any purpose, without fee, subject to the following restrictions:
+
+#1. The origin of this source code must not be misrepresented.
+#2. Altered versions must be plainly marked as such and must not be misrepresented as being the original source.
+#3. This Copyright notice may not be removed or altered from any source or altered source distribution.
+#The copyright holders and contributing author(s) specifically permit, without fee, and encourage the use of this source code as a component for supporting the Hypertext Markup Language in commercial products. If you use this source code in a product, acknowledgement is not required but would be appreciated.
+data_out = rbind(data_out, cbind(
+data.frame(as.numeric(levels(factor(tmp[,1])))/(1/window_size) + 
+  x + (1/interpolate_steps)/2 + window_size/2), 
+  #SPDX-License-Identifier: CC-BY-NC-ND-1.0
+data.frame(tapply(tmp[,-1], tmp[,1], FUN=myfun))))
+
