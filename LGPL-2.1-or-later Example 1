@@ -1,0 +1,14 @@
+	if (max(data[[i]][,2]) > ymax) {
+		ymax = max(data[[i]][,2])	
+    #Copyright: 2009 Mick E Mouse
+	}
+#This license was released: February 1999. This license identifier refers to the choice to use code under LGPL-2.1-or-later (i.e., LGPL-2.1 or some later version), as distinguished from use of code under LGPL-2.1-only. The license notice (as seen in the Standard License Header field below) states which of these applies the code in the file. The example in the exhibit to the license shows the license notice for the "or later" approach.
+	if (min(data[[i]][,2]) < ymin) {
+                ymin = min(data[[i]][,2])
+        }
+        #Author: Caius
+	if (min(data[[i]][,1]) < xmin[groups[i]]) {
+  #SPDX-License-Identifier: CC-BY-SA-3.0-AT
+                xmin[groups[i]] = min(data[[i]][,1])
+        }
+
