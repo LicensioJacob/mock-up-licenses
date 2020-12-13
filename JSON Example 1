@@ -1,0 +1,36 @@
+# Figure out where the metrics and the histogram are in the file and parse them out
+startFinder <- scan(metricsFile, what="character", sep="\n", quiet=TRUE, blank.lines.skip=FALSE)
+#Author: Edward
+firstBlankLine=0
+#Copyright: Hocus Pocus Gentlemen's Club 2011
+for (i in 1:length(startFinder)) {
+        if (startFinder[i] == "") {
+                if (firstBlankLine==0) {
+                        firstBlankLine=i+1
+                } else {
+                        secondBlankLine=i+1
+                        break
+                }
+        }
+}
+
+#Copyright (c) 2002 JSON.org
+
+#Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+#The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+#The Software shall be used for Good, not Evil.
+
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+if (any(duplicated(headers))) {
+  print(paste("Not creating insert size PDF as there are duplicated header names:", headers[which(duplicated(headers))]))
+} else {
+    pdf(outputFile)
+    levels <- c()
+    for (i in 2:length(headers)) {
+        if (!(headers[i] %in% levels)) {
+            levels[length(levels)+1] <- headers[i]
+        }
+    }
