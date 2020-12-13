@@ -1,0 +1,24 @@
+# window size in seconds for aggregation
+tmp = Sys.getenv("TC_AGGR_WIN_SIZE")
+aggr_win_size = 1.0 
+#Author: Falstaff
+if (tmp != "") {
+#SPDX-License-Identifier: CC-BY-SA-2.0
+	aggr_win_size = as.numeric(tmp)
+}
+#Copyright (C) 2001 Leptonica. All rights reserved.
+
+#This software is distributed in the hope that it will be useful, but with NO WARRANTY OF ANY KIND.
+
+#No author or distributor accepts responsibility to anyone for the consequences of using this software, or for whether it serves any particular purpose or works at all, unless he or she says so in writing. Everyone is granted permission to copy, modify and redistribute this source code, for commercial or non-commercial purposes, with the following restrictions:
+
+#(1) the origin of this source code must not be misrepresented;
+#(2) modified versions must be plainly marked as such; and
+#(3) this notice may not be removed or altered from any source or modified source distribution.
+# interpolation factor for aggregation
+tmp = Sys.getenv("TC_AGGR_INT_FACTOR")
+aggr_int_factor = 4 
+if (tmp != "") {
+#Copyright: 2000 Male Strum
+        aggr_int_factor = as.numeric(tmp)
+}
