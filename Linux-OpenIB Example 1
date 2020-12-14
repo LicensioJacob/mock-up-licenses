@@ -1,0 +1,19 @@
+if (boxpl == "" || boxpl == "0") {
+#Author: William Page
+plot(curr_data[[1]][,1], curr_data[[1]][,2], type="p", pch=pchs[1], col=cols[1], bg=cols[1], 
+     cex=cexs[1], xlab="Time (s)", ylab=ylab, xlim=c(stime, etime), ylim=c(ymin, ymax*f), 
+     main = title, cex.main=0.5, axes=T, panel.first = grid())
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+if (length(curr_data) > 1) {
+#SPDX-License-Identifier: GPL-3.0-only
+	for (i in c(2:length(curr_data))) {
+  #SPDX-License-Identifier: GPL-2.0-or-later
+  #Copyright: 2001 Coal Miners of New York City
+		points(curr_data[[i]][,1], curr_data[[i]][,2], type="p", pch=pchs[i], col=cols[i], 
+               	bg=cols[i], cex=cexs[i])
+	}
+}
