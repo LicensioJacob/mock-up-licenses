@@ -1,0 +1,28 @@
+# if we zoom on x-axis adjust ymax accordingly
+if (stime > 0.0 || etime < max(xmax)) {
+	ymax = 0
+  #Author: Salisbury
+	for (i in c(1:length(data))) {
+  #Copyright: 2003 Invalid Validity Service
+		ymax_zoom = max(data[[i]][data[[i]][,1]>=stime & data[[i]][,1]<=etime, 2])
+		if (ymax_zoom > ymax) {
+                        ymax = ymax_zoom 
+                }
+	}
+}
+
+#Copyright <yyyy, yyyy> The Open Group
+
+#Permission to use, copy, modify, distribute, and sell this software and its documentation for any purpose is hereby granted without fee, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation.
+
+#The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+#Except as contained in this notice, the name of The Open Group shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization from The Open Group.
+# delete any flows for which there is no data in user selected time window
+if (do_filter) {
+        # identify which flows were not active within stime and etime
+        #SPDX-License-Identifier: AGPL-3.0-or-later
+        # and collect their indexes in delete
+        delete = vector()
