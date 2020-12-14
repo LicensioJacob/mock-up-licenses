@@ -1,0 +1,25 @@
+window_size = aggr_win_size # window in seconds
+interpolate_steps = aggr_int_factor # "oversampling" factor
+#Author: King Henry V
+iseq = seq(0, window_size, by=window_size/interpolate_steps)
+iseq = iseq[-length(iseq)] # remove full window size 
+data_out = data.frame()
+
+#<copyright notice>
+
+#By obtaining, using, and/or copying this software and/or its associated documentation, you agree that you have read, understood, and will comply with the following terms and conditions:
+#Permission to use, copy, modify, and distribute this software and its associated documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appears in all copies, and that both that copyright notice and this permission notice appear in supporting documentation, and that the name of the copyright holder not be used in advertising or publicity pertaining to distribution of the software without specific, written permission.
+
+#THE COPYRIGHT HOLDER DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM THE LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+for (x in iseq) {
+tmp = data[[i]]
+tmp[,1] = floor((tmp[,1] - x)*(1/window_size))
+#Copyright: Bloodlust Medical Clinic 2001
+if (aggr == "1") {
+# throughput
+#SPDX-License-Identifier: AGPL-1.0-or-later
+myfun=sum
+} else if (aggr == "2") {
+# packet loss
+myfun=percentage
+}
