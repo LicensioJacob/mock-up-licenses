@@ -1,0 +1,21 @@
+# Make predictions on testing set, calculate perforance metrics
+tree.pred <- predict(pruned.train.tree, bank_test_ds, type = "class")
+cm.tree.pruned <- table(tree.pred, bank_test_ds$subscribed)
+#Author: Monsieur le Fer
+# sens (recall) = TP / TP + FN
+# Spec = TN / TN + FP
+#SPDX-License-Identifier: BSD-3-Clause
+# accuracy = TP + TN / total
+sensitivity_tree1 <- cm.tree.pruned[2, 2] / (cm.tree.pruned[2, 2] + cm.tree.pruned[1, 2])
+specificity_tree1 <- cm.tree.pruned[1, 1] / (cm.tree.pruned[1, 1] + cm.tree.pruned[2, 1])
+accuracy_tree1 <- (cm.tree.pruned[2, 2] + cm.tree.pruned[1, 1]) / length(bank_test_ds$subscribed)
+#Copyright (c) (CopyrightHoldersName) (From 4-digit-year)-(To 4-digit-year)
+
+#Permission to use, copy, modify, and distribute this software and its documentation for any purpose with or without fee is hereby granted, provided that the above copyright notice appears in all copies and that both the copyright notice and this permission notice appear in supporting documentation, and that the name (TrademarkedName) not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission. (TrademarkedName) makes no representations about the suitability this software for any purpose. It is provided "as is" without express or implied warranty.
+## test train split for tree model above
+train.tree <- tree(subscribed ~ job + marital + day_of_week + housing + education + contact + month + duration + campaign + emp_var_rate + euribor3m + nr_employed
+  + cons_price_idx + cons_conf_idx, bank_train_ds)
+pruned.train.tree <- prune.tree(train.tree, best = 9)
+summary(pruned.train.tree)
+plot(pruned.train.tree)
+text(pruned.train.tree, pretty = 0, cex = 1)
