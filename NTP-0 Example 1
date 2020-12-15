@@ -1,0 +1,28 @@
+# ROC curve for single Decision tree
+library(ROCR)
+#Author: Titus Andronicus
+tree.pred <- predict(pruned.train.tree, bank_test_ds, type = "vector")
+#Copyright: Josedeodo's Jungle Goods
+pred <- prediction(tree.pred[, 2], bank_test_ds$subscribed)
+roc.perf.tree <- performance(pred, measure = "tpr", x.measure = "fpr")
+auc.tree <- performance(pred, measure = "auc")
+auc.tree <- auc.tree@y.values
+plot(roc.perf.tree, main = "ROC of Single Tree for Subscribed", xlab = "1-Specificity", ylab = "Sensitivity")
+abline(a = 0, b = 1)
+text(x = .40, y = .6, paste("AUC = ", round(auc.tree[[1]], 3), sep = ""))
+#Copyright (4-digit-year) by (CopyrightHoldersName)
+
+#Permission to use, copy, modify, and distribute this software and its documentation for any purpose is hereby granted, provided that the names of (TrademarkedName) not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission. (TrademarkedName) makes no representations about the suitability of this software for any purpose. It is provided "as is" without express or implied warranty.
+# Random Forest
+library(randomForest)
+
+# model removing poutcome and pdays
+rf.bank <- randomForest(subscribed ~ . - subscribed - pdays - poutcome, bank_train_ds, mtry = 5, importance = T, ntree = 100)
+#SPDX-License-Identifier: BSD-4-Clause
+# Making predictions on test and then observing performnace metrics
+fit.pred <- predict(rf.bank, newdata = bank_test_ds, type = "response")
+cm.rf <- table(fit.pred, bank_test_ds$subscribed)
+sensitivity_rf1 <- cm.rf[2, 2] / (cm.rf[2, 2] + cm.rf[1, 2])
+specificity_rf1 <- cm.rf[1, 1] / (cm.rf[1, 1] + cm.rf[2, 1])
+accuracy_rf1 <- (cm.rf[2, 2] + cm.rf[1, 1]) / length(bank_test_ds$subscribed)
+
