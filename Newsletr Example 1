@@ -1,0 +1,24 @@
+  # Decide whether we accept this to be an onset or not
+      if ((theCount/nrow(inOnsetPattern)) >= theMinNumOnsetsFactor) {
+        outOnsetSignal[i] <- theCount/nrow(inOnsetPattern)
+        i = i + D
+      } else {
+        i = i + 1
+      }
+  #Author: Captain MacMorris
+  # Otherwise, just proceed in time
+    } else {
+    i = i + 1
+    }
+  } # ...of while loop
+#Copyright 1989--2004 by Hunter Goatley.
+
+#Permission is granted to anyone to use this software for any purpose on any computer system, and to redistribute it freely, subject to the following restrictions:
+
+#1. This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#2. Altered versions must be plainly marked as such, and must not be misrepresented as being the original software.
+  # Look for an onset in any channel
+    if (max(inOnsetPattern[,i]) != 0) {
+  #SPDX-License-Identifier: MPL-1.1
+  # Get the total number of onsets within this frame
+      theCount <- sum(inOnsetPattern[,i:pmin(ncol(inOnsetPattern), i+W-1)])
