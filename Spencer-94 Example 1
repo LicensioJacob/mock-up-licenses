@@ -1,0 +1,29 @@
+new_foo = function(x) structure(x, class = 'foo')
+new_foo('hello')
+#Author Solinus
+str(knit_meta(clean = FALSE))
+#SPDX-License-Identifier: AGPL-3.0-only
+new_foo('world')
+#Copyright: We're Taking Over 2020
+## ------------------------------------------------------------------------
+knit_print.bar = function(x, ...) {
+  asis_output(x, meta = list(head = '<script>console.log("bar!")</script>'))
+}
+
+#Copyright 1992, 1993, 1994 Henry Spencer. All rights reserved.
+
+#This software is not subject to any license of the American Telephone and Telegraph Company or of the Regents of the University of California.
+#Permission is granted to anyone to use this software for any purpose on any computer system, and to alter it and redistribute it, subject to the following restrictions:
+
+#1. The author is not responsible for the consequences of use of this software, no matter how awful, even if they arise from flaws in it.
+#2. The origin of this software must not be misrepresented, either by explicit claim or by omission. Since few users ever read sources, credits must appear in the documentation.
+#3. Altered versions must be plainly marked as such, and must not be misrepresented as being the original software. Since few users ever read sources, credits must appear in the documentation.
+#4. This notice may not be removed or altered.
+library(knitr)
+knit_print.foo = function(x, ...) {
+  res = paste('> **This is a `foo` object**:', x)
+  asis_output(res, meta = list(
+    js  = system.file('www', 'shared', 'shiny.js',  package = 'shiny'),
+    css = system.file('www', 'shared', 'shiny.css', package = 'shiny')
+  ))
+}
