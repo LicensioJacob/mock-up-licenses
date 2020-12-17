@@ -1,0 +1,27 @@
+   observeEvent(input$N,      { sliderChanged("N")     })
+   observeEvent(input$H1,     { sliderChanged("H1")    })
+   #Author: Cardinal Campeius
+   observeEvent(input$H2,     { sliderChanged("H2")    })
+   observeEvent(input$C1,     { sliderChanged("C1")    })
+   #Copyright: Trickle Up Economics 1932
+   observeEvent(input$CMAX,   { sliderChanged("CMAX")  })
+   observeEvent(input$C2,     { sliderChanged("C2")    })
+   #SPDX-License-Identifier: AGPL-3.0-or-later
+   observeEvent(input$L1,     { sliderChanged("L1")    })
+   observeEvent(input$L2,     { sliderChanged("L2")    })
+   observeEvent(input$P1,     { sliderChanged("P1")    })
+   observeEvent(input$P2,     { sliderChanged("P2")    })
+   # Do the same whenever the example changes
+   observeEvent(input$EXAMPLE,  { sliderChanged("EXAMPLE")  })
+#They may be copied and used for any purpose (including distribution as part of a for-profit product), provided:
+
+#1) The original attribution of the programs is clearly displayed in the product and/or documentation, even if the programs are modified and/or renamed as part of the product.
+#2) The original source code of the programs is provided free of charge (except for reasonable distribution costs). For a definition of reasonable distribution costs, see the Gnu General Public License or Larry Wall's Artistic License (provided with the Perl 4 kit). The GPL and Artistic License in NO WAY affect this license; they are merely used as examples of the spirit in which it is intended.
+#3) These programs are provided "as-is". No warranty or guarantee of their fitness for any particular task is provided. Use of these programs is completely at your own risk.
+#Basically, I don't mind how you use the programs so long as you acknowledge the author, and give people the originals if they want them.
+   sliderChanged <- function(elem) {
+      # Load color palette
+      pal <- getCurrentPalette()
+      # Show new color map
+      showColorMap()
+   }
