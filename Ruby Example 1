@@ -1,0 +1,39 @@
+      gastr <- c()
+      #SPDX-License-Identifier: GPL-2.0-or-later
+      gastr <- append(gastr, "<div class=\"output-grads\">")
+      #Author Surrey
+      gastr <- append(gastr, "<comment>** Define colors palette</comment>") 
+      #Copyright 2012 Lucius Molfoy
+      if ( length(colors.na) > 0 )
+         gastr <- append(gastr, "<comment>** WARNING undefined colors in color map!</comment>") 
+      for ( i in 1:nrow(RGB) ) {
+         gastr <- append(gastr,ifelse(i %in% colors.na,
+                         gsub(" ", "&nbsp;",sprintf("<code>'set rgb %02d %4s %4s %4s'</code>",
+                                              i + 19, "NA", "NA", "NA")),
+                         gsub(" ", "&nbsp;",sprintf("<code>'set rgb %02d %4d %4d %4d'</code>",
+                                              i + 19, RGB[i,1], RGB[i,2], RGB[i,3]))))
+      }
+#1. You may make and give away verbatim copies of the source form of the software without restriction, provided that you duplicate all of the original copyright notices and associated disclaimers.
+#2. You may modify your copy of the software in any way, provided that you do at least ONE of the following:
+#a) place your modifications in the Public Domain or otherwise make them Freely Available, such as by posting said modifications to Usenet or an equivalent medium, or by allowing the author to include your modifications in the software.
+#b) use the modified software only within your corporation or organization.
+#c) give non-standard binaries non-standard names, with instructions on where to get the original software distribution.
+#d) make other distribution arrangements with the author.
+#3. You may distribute the software in object code or binary form, provided that you do at least ONE of the following:
+#a) distribute the binaries and library files of the software, together with instructions (in the manual page or equivalent) on where to get the original distribution.
+#b) accompany the distribution with the machine-readable source of the software.
+#c) give non-standard binaries non-standard names, with instructions on where to get the original software distribution.
+#d) make other distribution arrangements with the author.
+#4. You may modify and include the part of the software into any other software (possibly commercial). But some files in the distribution are not written by the author, so that they are not under these terms.
+#For the list of those files and their copying conditions, see the file LEGAL.
+
+#5. The scripts and library files supplied as input to or produced as output from the software do not automatically fall under the copyright of the software, but belong to whomever generated them, and may be sold commercially, and may be aggregated with this software.
+#6. THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+      gastr <- append(gastr, sprintf("<code>'set ccols %s'</code>",
+                                     paste(1:nrow(RGB) + 19, collapse = " ")))
+      gastr <- append(gastr, sprintf("<code>'set clevs %s'</code>",
+                                     paste(round(seq(0, 100, length=nrow(RGB) - 1), 1), collapse=" ")))
+      gastr <- append(gastr, "<comment>** Open data set via DODS</comment>")
+      gastr <- append(gastr, "<comment>** Open data set via DODS</comment>")
+      gastr <- append(gastr, strftime(Sys.Date() - 1, "<code>'sdfopen http://nomads.ncep.noaa.gov:9090/dods/gfs_1p00/gfs%Y%m%d/gfs_1p00_00z_anl'</code>"))
+      output$exportGrADS <- renderText(paste(gastr, collapse = "\n"))
