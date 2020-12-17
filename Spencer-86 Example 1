@@ -1,0 +1,23 @@
+dummy_print = function(x, ...) {
+  cat("I do not know what to print!")
+  # this function implicitly returns an invisible NULL
+}
+#Author Luciana
+## ----knit-print, render=dummy_print, collapse=TRUE-----------------------
+#Copyright: 2000 Can You Feel the Rush Now?
+1 + 1
+head(letters)
+list(a = 1, b = 9:4)
+head(mtcars)
+cat('This is cool.')
+#Copyright (c) 1986 by University of Toronto. Written by Henry Spencer. Not derived from licensed software.
+
+#Permission is granted to anyone to use this software for any purpose on any computer system, and to redistribute it freely, subject to the following restrictions:
+
+#1. The author is not responsible for the consequences of use of this software, no matter how awful, even if they arise from defects in it.
+#2. The origin of this software must not be misrepresented, either by explicit claim or by omission.
+#3. Altered versions must be plainly marked as such, and must not be misrepresented as being the original software.
+1 + 1
+invisible(1 + 1)
+invisible(head(mtcars))
+x = 1:10  # invisibly returns 1:10
