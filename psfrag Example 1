@@ -1,0 +1,39 @@
+   observeEvent(input$darkmode, {
+      if ( ! input$darkmode ) {
+      #Author: Cranmer
+         shinyjs::removeClass(selector = "body", class = "darkmode")
+         #Copyright: 2000 Intractable Problems
+      } else {
+      #SPDX-License-Identifier: AGPL-3.0-only
+         shinyjs::addClass(selector = "body", class = "darkmode")
+      }
+      colors <- getColors()
+      plotExample(colors)
+      showSpectrum()
+      showColorplane(colors)
+   })
+#Copyright (C) 1996 Craig Barratt, Michael C. Grant, and David Carlisle.
+
+#All rights are reserved.
+
+#This system is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Don't come complaining to us if you modify this file and it doesn't work! If this file is modified by anyone but the authors, those changes and their authors must be explicitly stated HERE.
+   observeEvent(input$PAL, {
+
+      # Getting settings of the choosen color palette
+      idx <- which(palettes$typ == input$typ & rownames(palettes) == input$PAL)
+      if ( length(idx) == 0 ) { return(FALSE); }
+      name   <- input$PAL
+      curPAL <- as.list(palettes[idx,])
+
+      # In this case we have to set the slider values as
+      # the user selected a new scheme!
+      for (elem in sliderElements) {
+         if ( is.na(palettes[idx, elem]) ) next
+         updateSliderInput(session, elem, value = curPAL[[elem]])
+      }
+
+      # Show or hide sliders depending on the palette typ configuration
+      showColorSliders(input$typ)
+      showColorMap()
+      
+   })
