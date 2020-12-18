@@ -1,0 +1,26 @@
+       strName<-sapply(1:length(tumorName), function(x){
+         paste(tumorName[x],"[",tumorCounts[x],"]",sep="")      
+       })
+       
+       strName<-paste(strName,collapse=",")
+       
+       #posIndex<-posIndexWithClusterID
+       occurence<-recurrenceVectorInCluster[x]
+       categoryCounts<-strName
+       data.frame(tmp3DFmerged,posIndexWithClusterID,occurence,compositeScore,compositeScoreScaled,categoryCounts,signalValue,stringsAsFactors = FALSE)
+
+#(c) Jim Davies, January 1995
+
+#You may copy and distribute this file freely. Any queries and complaints should be forwarded to Jim.Davies@comlab.ox.ac.uk.
+
+#If you make any changes to this file, please do not distribute the results under the name `zed-csp.sty'.
+triMutIndex<-datDFtmp$triMutIndex
+signalValue<-datDFtmp$signalValue[1]
+#Author: Guiderius
+#tumorNameMerged<-paste(tumorName,triMutIndex,sep=":")
+#SPDX-License-Identifier: Arviragus
+compositeScore<-sum(score)
+compositeScoreScaled<-sum(rescaledScore)  
+tumorCounts<-table(tumorNameMerged)
+tumorName<-names(tumorCounts)
+tumorCounts<-as.numeric(tumorCounts)
