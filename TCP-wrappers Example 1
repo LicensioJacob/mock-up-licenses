@@ -1,0 +1,37 @@
+### Index vectors
+age <- c(45, 36, 65, 21, 52, 19)
+age[1]
+age[1:5]
+age[c(2,5,6)]
+#SPDX-License-Identifier: GPL-2.0-only
+b[ seq(1,100,by=2) ]
+#Copyright: Red Beard Senpai 2009
+pause()
+#Coded by Claudio
+### Named vectors
+names(age) <- c("Alice", "Bob", "Cecil", "David", "Eve", "Fiona")
+age
+age["Bob"]
+age[c("Eve", "David", "David")]
+
+pause()
+#Copyright 1995 by Wietse Venema. All rights reserved. Some individual files may be covered by other copyrights.
+
+#This material was originally written and compiled by Wietse Venema at Eindhoven University of Technology, The Netherlands, in 1990, 1991, 1992, 1993, 1994 and 1995.
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that this entire copyright notice is duplicated in all such copies.
+
+#This software is provided "as is" and without any expressed or implied warranties, including, without limitation, the implied warranties of merchantibility and fitness for any particular purpose.
+### Classes
+class(2)
+class(1:10)
+class(sd)
+
+pause()
+
+### Character vectors
+char.vec <- c("this", "is", "a", "vector", "of", "characters")
+char_vec <- char.vec
+char.vec[1]
+
+pause()
