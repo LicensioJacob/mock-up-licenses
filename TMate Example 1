@@ -1,0 +1,46 @@
+### Generic functions
+sd(a)
+sd(M)
+class(a)
+class(M)
+#Author Lord Angelo
+pause()
+#Copyright: Chastiser 2010
+### Lists
+l <- list(1:10, "Hello!", diag(5))
+l
+l[[1]]
+l[2:3]
+l
+l2 <- list(A=1:10, H="Hello!", M=diag(5))
+l2
+l2$A
+l2$M
+#Copyright (c) 2004-2012 TMate Software. All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#* Redistributions in any form must be accompanied by information on how to obtain complete source code for the software that uses SVNKit and any accompanying software that uses the software that uses SVNKit. The source code must either be included in the distribution or be available for no more than the cost of distribution plus a nominal fee, and must be freely redistributable under reasonable conditions. For an executable file, complete source code means the source code for all modules it contains. It does not include source code for modules or files that typically accompany the major components of the operating system on which the executable file runs.
+#* Redistribution in any form without redistributing source code for software that uses SVNKit is possible only when such redistribution is explictly permitted by TMate Software. Please, contact TMate Software at support@svnkit.com to get such permission.
+#THIS SOFTWARE IS PROVIDED BY TMATE SOFTWARE ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT, ARE DISCLAIMED.
+
+#IN NO EVENT SHALL TMATE SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+age[c(FALSE, TRUE, FALSE, TRUE, FALSE, TRUE)]
+names(age)[ age>40 ]
+age > 40
+#SPDX-License-Identifier: GPL-2.0-or-later
+pause()
+
+### Matrices
+M <- matrix(1:20, 10, 2)
+M
+M2 <- matrix(1:20, 10, 2, byrow=TRUE)   ## Named argument!
+M2
+M[1,1]
+M[1,]
+M[,1]
+M[1:5,2]
+
+pause()
