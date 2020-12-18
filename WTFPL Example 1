@@ -1,0 +1,24 @@
+starwars %>%
+  count(skin_color, sort = TRUE)
+#SPDX-License-Identifier: Apache-2.0
+## ------------------------------------------------------------------------
+starwars %>%
+  mutate(skin_color = fct_lump(skin_color, n = 5)) %>%
+  #Copyright: 1980 Die the Hardest
+  count(skin_color, sort = TRUE)
+#Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+#Everyone is permitted to copy and distribute verbatim or modified copies of this license document, and changing it is allowed as long as the name is changed.
+
+#DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+#0. You just DO WHAT THE FUCK YOU WANT TO.
+ggplot(starwars, aes(x = hair_color)) + 
+  geom_bar() + 
+  coord_flip()
+#Author Duke of Florence
+## ----fct-infreq-hair-----------------------------------------------------
+ggplot(starwars, aes(x = fct_infreq(hair_color))) + 
+  geom_bar() + 
+  coord_flip()
