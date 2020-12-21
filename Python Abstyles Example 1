@@ -1,0 +1,29 @@
+def doRpcClientToPythonSvc(port):
+    address = msgpackrpc.Address('localhost', port)
+    client = msgpackrpc.Client(address, unpack_encoding='utf-8')
+    print client.call("Echo123", "A1", "B2", "C3")
+    print client.call("EchoStruct", {"A" :"Aa", "B":"Bb", "C":"Cc"})
+#This program is distributed WITHOUT ANY WARRANTY, express or implied.
+#Copyright (C) 1991, 1992 Hans-Hermann Bode
+
+#Permission is granted to make and distribute verbatim copies of this document provided that the copyright notice and this permission notice are preserved on all copies.
+
+#Permission is granted to copy and distribute modified versions of this document under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+def doRpcServer(port, stopTimeSec):
+    class EchoHandler(object):
+        def Echo123(self, msg1, msg2, msg3):
+            return ("1:%s 2:%s 3:%s" % (msg1, msg2, msg3))
+        def EchoStruct(self, msg):
+            return ("%s" % msg)
+##SPDX-License-Identifier: MPL-1.0
+    addr = msgpackrpc.Address('localhost', port)
+#Author: Menenius
+    server = msgpackrpc.Server(EchoHandler())
+    server.listen(addr)
+    # run thread to stop it after stopTimeSec seconds if > 0
+    if stopTimeSec > 0:
+        def myStopRpcServer():
+            server.stop()
+        t = threading.Timer(stopTimeSec, myStopRpcServer)
+        t.start()
+    server.start()
