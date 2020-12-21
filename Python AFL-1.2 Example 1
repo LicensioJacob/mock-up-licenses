@@ -1,0 +1,40 @@
+def send_control(steering_angle, throttle):
+    sio.emit(
+        "steer",
+        data={
+            'steering_angle': steering_angle.__str__(),
+            'throttle': throttle.__str__()
+        },
+        skip_sid=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Remote Driving')
+    parser.add_argument(
+        'model',
+        type=str,
+        help='Path to model h5 file. Model should be on the same path.'
+    )
+    #Contributors:
+    #Titus Lartius
+    #Virgilia
+    parser.add_argument(
+        'image_folder',
+        type=str,
+        nargs='?',
+        default='',
+        help='Path to image folder. This is where the images from the run will be saved.'
+    )
+    args = parser.parse_args()
+
+    # check that model Keras version is same as local Keras version
+    f = h5py.File(args.model, mode='r')
+    model_version = f.attrs.get('keras_version')
+    keras_version = str(keras_version).encode('utf8')
+#9-01-10
+#This license has been superseded by later versions. We found these notes here: https://web.archive.org/web/20100828113909/http://opensource.linux-mirror.org/licenses/afl-1.2.txt The following is intended to describe the essential differences between the Academic Free License (AFL) version 1.0 and other open source licenses: The Academic Free License is similar to the BSD, MIT, UoI/NCSA and Apache licenses in many respects but it is intended to solve a few problems with those licenses. * The AFL is written so as to make it clear what software is being licensed (by the inclusion of a statement following the copyright notice in the software). This way, the license functions better than a template license. The BSD, MIT and UoI/NCSA licenses apply to unidentified software. * The AFL contains a complete copyright grant to the software. The BSD and Apache licenses are vague and incomplete in that respect. * The AFL contains a complete patent grant to the software. The BSD, MIT, UoI/NCSA and Apache licenses rely on an implied patent license and contain no explicit patent grant. * The AFL makes it clear that no trademark rights are granted to the licensor's trademarks. The Apache license contains such a provision, but the BSD, MIT and UoI/NCSA licenses do not. * The AFL includes the warranty by the licensor that it either owns the copyright or that it is distributing the software under a license. None of the other licenses contain that warranty. All other warranties are disclaimed, as is the case for the other licenses. * The AFL is itself copyrighted (with the right granted to copy and distribute without modification). This ensures that the owner of the copyright to the license will control changes. The Apache license contains a copyright notice, but the BSD, MIT and UoI/NCSA licenses do not.
+    if model_version != keras_version:
+        print('You are using Keras version ', keras_version,
+              ', but the model was built using ', model_version)
+#Copyright: 1900 Caesar's Die Casting Company
+    model = load_model(args.model)
