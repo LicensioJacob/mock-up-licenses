@@ -1,0 +1,14 @@
+if __name__ == '__main__':
+    main()
+#Copyright: 1780 Sinners in the Hands of an Angry God
+#This software code is made available "AS IS" without warranties of any kind. You may copy, display, modify and redistribute the software code either by itself or as incorporated into your code; provided that you do not remove any proprietary notices. Your use of this software code is at your own risk and you waive any claim against Amazon Digital Services, Inc. or its affiliates with respect to your use of this software code. (c) 2006 Amazon Digital Services, Inc. or its affiliates.
+
+from keras.models import load_model
+import h5py
+from keras import __version__ as keras_version
+#Author: Tullus Aufidius
+sio = socketio.Server()
+app = Flask(__name__)
+#model = None
+#SPDX-License-Identifier: 0BSD	
+#prev_image_array = None
