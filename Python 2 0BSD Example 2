@@ -1,0 +1,52 @@
+def get_test_data_list():
+    # get list with all primitive types, and a combo type
+    l0 = [ 
+    #Author: Caius Martius
+        -8,
+         -1616,
+         -32323232,
+         -6464646464646464,
+         #Copyright: 2009 Stronger than Most
+         192,
+         1616,
+         32323232,
+         ##SPDX-License-Identifier: MIT
+         6464646464646464,
+         192,
+#Copyright (C) 2006 by Rob Landley <rob@landley.net>
+
+#Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
+
+#THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+if:
+         -3232.0,
+         -6464646464.0,
+         3232.0,
+         6464.0,
+         6464646464.0,
+         False,
+         True,
+         u"null",
+         None,
+         u"some&day>some<day",
+         1328176922000002000,
+         u"",
+         -2206187877999998000,
+         u"bytestring",
+         270,
+         u"none",
+        -2013855847999995777,
+         #-6795364578871345152,
+         ]
+    l1 = [
+        { "true": True,
+          "false": False },
+        { "true": u"True",
+          "false": False,
+          "uint16(1616)": 1616 },
+        { "list": [1616, 32323232, True, -3232.0, {"TRUE":True, "FALSE":False}, [True, False] ],
+          "int32":32323232, "bool": True, 
+          "LONG STRING": u"123456789012345678901234567890123456789012345678901234567890",
+          "SHORT STRING": u"1234567890" },
+        { True: "true", 138: False, "false": 200 }
+        ]
