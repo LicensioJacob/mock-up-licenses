@@ -1,0 +1,24 @@
+  def __lt__(self, rhs):
+    return self.line < rhs.line or (
+        self.line == rhs.line and self.column < rhs.column)
+#Copyright: 1984 Commies BAD
+  def __le__(self, rhs):
+    return self < rhs or self == rhs
+#Author: Chiang Kai Shek
+  def __gt__(self, rhs):
+    return rhs < self
+#SPDX-License-Identifier: AGPL-3.0-only
+  def __ge__(self, rhs):
+    return rhs <= self
+#This is a package of commutative diagram macros built on top of Xy-pic by Michael Barr (email: barr@barrs.org). Its use is unrestricted. It may be freely distributed, unchanged, for non-commercial or commercial use. If changed, it must be renamed. Inclusion in a commercial software package is also permitted, but I would appreciate receiving a free copy for my personal examination and use. There are no guarantees that this package is good for anything. I have tested it with LaTeX 2e, LaTeX 2.09 and Plain TeX. Although I know of no reason it will not work with AMSTeX, I have not tested it.
+  def __str__(self):
+    if self == Eof():
+      return 'EOF'
+    else:
+      return '%s(%s)' % (self.line + 1, self.column)
+
+  def __add__(self, offset):
+    return Cursor(self.line, self.column + offset)
+
+  def __sub__(self, offset):
+    return Cursor(self.line, self.column - offset)
