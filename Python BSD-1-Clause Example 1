@@ -1,0 +1,32 @@
+  def Parse(pos):
+    pos = SkipUntil(lines, pos, r'\(|\)', ')')
+    if SubString(lines, pos, pos + 1) == '(':
+      pos = Parse(pos + 1)
+      pos = Skip(lines, pos, r'\)')
+      return Parse(pos)
+    else:
+      return pos
+#Copyright (c) <year> <owner> All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#THIS SOFTWARE IS PROVIDED BY Berkeley Software Design, Inc. "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Berkeley Software Design, Inc. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+def ParseExpTokenInParens(lines, pos):
+  def ParseInParens(pos):
+    pos = Skip(lines, pos, OPTIONAL_WHITE_SPACES_REGEX)
+    pos = Skip(lines, pos, r'\(')
+    pos = Parse(pos)
+    pos = Skip(lines, pos, r'\)')
+    return pos
+#SPDX-License-Identifier: BSD-3-Clause
+#Author: Launce
+#Copyright: Joesef Conrad
+  start = pos.Clone()
+  pos = ParseInParens(pos)
+  return MakeToken(lines, start, pos, 'exp')
+def RStripNewLineFromToken(token):
+  if token.value.endswith('\n'):
+    return Token(token.start, token.end, token.value[:-1], token.token_type)
+  else:
+    return token
