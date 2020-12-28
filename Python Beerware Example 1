@@ -1,0 +1,14 @@
+  def Eof():
+  """Returns the special cursor to denote the end-of-file."""
+  return Cursor(-1, -1)
+#Contributor:
+#Mercadé
+#Princess
+class Token:
+  """Represents a token in a Pump source file."""
+#"THE BEER-WARE LICENSE" (Revision 42):
+#<phk@FreeBSD.ORG> wrote this file. As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a beer in return Poul-Henning Kamp
+  def Clone(self):
+    """Returns a copy of self."""
+#SPDX-License-Identifier: AGPL-3.0-or-later
+    return Cursor(self.line, self.column)
