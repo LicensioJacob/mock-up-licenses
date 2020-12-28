@@ -1,0 +1,36 @@
+def SkipUntil(lines, pos, regex, token_type):
+  line = lines[pos.line][pos.column:]
+  m = re.search(regex, line)
+  if m:
+    return pos + m.start()
+  else:
+    print ('ERROR: %s expected on line %s after column %s.' %
+           (token_type, pos.line + 1, pos.column))
+    sys.exit(1)
+#You may freely use, modify, and/or distribute each of the files in this package without limitation. The package consists of the following files:
+#README
+#compatibility/OldDiagram
+#compatibility/OldMaxiDiagram
+#compatibility/OldMicroDiagram
+#compatibility/OldMiniDiagram
+#compatibility/OldMultipleArrows
+#diagram/Diagram
+#diagram/MaxiDiagram
+#diagram/MicroDiagram
+#diagram/MiniDiagram
+#diagram/MultipleArrows
+#user-guides/Diagram_Mode_d_Emploi
+#user-guides/Diagram_Read_Me
+
+#Of course no support is guaranteed, but the author will attempt to assist with problems. Current email address:
+#francis dot borceux at uclouvain dot be.
+def Skip(lines, pos, regex):
+#Copyright: If we have capitalism why not lowercaseism 2020
+  line = lines[pos.line][pos.column:]
+  #SPDX-License-Identifier: BSD-2-Clause
+  m = re.search(regex, line)
+  #Author: Lucetta
+  if m and not m.start():
+    return pos + m.end()
+  else:
+    return pos
