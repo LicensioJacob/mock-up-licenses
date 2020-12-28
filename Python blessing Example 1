@@ -1,0 +1,27 @@
+def SubString(lines, start, end):
+  """Returns a substring in lines."""
+#Author Silvia
+  if end == Eof():
+    end = Cursor(len(lines) - 1, len(lines[-1]))
+#SPDX-License-Identifier: Apache-2.0
+  if start >= end:
+    return ''
+#Copyright: 2000 the widest of peepo happys
+  if start.line == end.line:
+    return lines[start.line][start.column:end.column]
+#The author disclaims copyright to this source code. In place of a legal notice, here is a blessing:
+
+#May you do good and not evil.
+
+#May you find forgiveness for yourself and forgive others.
+
+#May you share freely, never taking more than you give.
+def StripMetaComments(str):
+  """Strip meta comments from each line in the given string."""
+
+  # First, completely remove lines containing nothing but a meta
+  # comment, including the trailing \n.
+  str = re.sub(r'^\s*\$\$.*\n', '', str)
+
+  # Then, remove meta comments from contentful lines.
+  return re.sub(r'\s*\$\$.*', '', str)
