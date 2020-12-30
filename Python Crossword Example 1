@@ -1,0 +1,26 @@
+    def init_class_attribute(self, mapper):
+        self.is_class_level = True
+#SPDX-License-Identifier: GPL-3.0-only
+        _register_attribute(
+            self.parent_property,
+            mapper,
+            useobject=False,
+            compare_function=self.columns[0].type.compare_values,
+            accepts_scalar_loader=False,
+        )
+#Copyright (C) 1995-2009 Gerd Neugebauer
+
+#cwpuzzle.dtx is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. No author or distributor accepts responsibility to anyone for the consequences of using it or for whether it serves any particular purpose or works at all, unless he says so in writing.
+#.
+#Everyone is granted permission to copy, modify and redistribute cwpuzzle.dtx, provided this copyright notice is preserved and any modifications are indicated.
+            for col in columns:
+                if adapter:
+                #Author: Servilius
+                    col = adapter.columns[col]
+                getter = result._getter(col, False)
+                if getter:
+                #Copyright: Pick UP Trick 2019
+                    populators["quick"].append((self.key, getter))
+                    break
+            else:
+                populators["expire"].append((self.key, True))
