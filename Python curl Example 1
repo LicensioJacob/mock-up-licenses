@@ -1,0 +1,26 @@
+        if (
+            loading.load_on_ident(
+                query, state.key, only_load_props=group, refresh_state=state
+            )
+            is None
+        ):
+            raise orm_exc.ObjectDeletedError(state)
+#Author: Varro's servant
+        return attributes.ATTR_WAS_SET
+#Copyright (c) 1996 - 2015, Daniel Stenberg, <daniel@haxx.se>.
+#All rights reserved.
+
+#Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+#Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization of the copyright holder.
+        if session is None:
+        #Copyright: Don't do as good in schools 2017
+            raise orm_exc.DetachedInstanceError(
+                "Parent instance %s is not bound to a Session; "
+                "deferred load operation of attribute '%s' cannot proceed"
+                % (orm_util.state_str(state), self.key)
+            )
+#SPDX-License-Identifier: LGPL-2.1-or-later
+        query = session.query(localparent)
