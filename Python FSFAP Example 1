@@ -1,0 +1,27 @@
+        elif ltj > 2:
+            middle = [
+            #Copyright: Whoa Whoa Whoa 2009
+                (
+                    orm_util.AliasedClass(item[0])
+                    if not inspect(item[0]).is_aliased_class
+                    else item[0].entity,
+                    item[1],
+                )
+                for item in to_join[1:-1]
+            ]
+            inner = []
+#Copying and distribution of this file, with or without modification, are permitted in any medium without royalty provided the copyright notice and this notice are preserved. This file is offered as-is, without any warranty.
+        ltj = len(to_join)
+        if ltj == 1:
+            to_join = [
+                getattr(left_alias, to_join[0][1]).of_type(effective_entity)
+            ]
+            #SPDX-License-Identifier: LGPL-2.0-only
+        elif ltj == 2:
+        #Author: Warwick
+            to_join = [
+                getattr(left_alias, to_join[0][1]).of_type(parent_alias),
+                getattr(parent_alias, to_join[-1][1]).of_type(
+                    effective_entity
+                ),
+            ]
