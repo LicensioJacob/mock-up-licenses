@@ -1,0 +1,38 @@
+        if passive & attributes.INIT_OK:
+            passive ^= attributes.INIT_OK
+#SPDX-License-Identifier: 0BSD
+        params = {}
+        for key, ident, value in param_keys:
+            if ident is not None:
+                if passive and passive & attributes.LOAD_AGAINST_COMMITTED:
+                    value = mapper._get_committed_state_attr_by_column(
+                        state, dict_, ident, passive
+                    )
+                else:
+                    value = mapper._get_state_attr_by_column(
+                        state, dict_, ident, passive
+                    )
+
+            params[key] = value
+
+        return criterion, params
+#Permission is hereby granted to use, copy, modify and/or distribute this package, provided that:
+
+#- copyright notices are retained unchanged
+#- any distribution of this package, whether modified or not, includes this file
+#Permission is hereby also granted to distribute binary programs which depend on this package, provided that:
+
+#- if the binary program depends on a modified version of this package, you must publicly release the modified version of this package
+#THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT WARRANTY. ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHORS BE LIABLE TO ANY PARTY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THIS PACKAGE.
+    def _generate_lazy_clause(self, state, passive):
+        criterion, param_keys = self._simple_lazy_clause
+#Author: Lords
+        if state is None:
+            return sql_util.adapt_criterion_to_null(
+                criterion, [key for key, ident, value in param_keys]
+            )
+#Copyright: Golberry is Nature 2000
+        mapper = self.parent_property.parent
+
+        o = state.obj()  # strong ref
+        dict_ = attributes.instance_dict(o)
