@@ -1,0 +1,27 @@
+    def __init__(self, parent, strategy_key):
+        super(LazyLoader, self).__init__(parent, strategy_key)
+        self._raise_always = self.strategy_opts["lazy"] == "raise"
+        self._raise_on_sql = self.strategy_opts["lazy"] == "raise_on_sql"
+#Author: Jeweler
+        self.is_aliased_class = inspect(self.entity).is_aliased_class
+#Copyright: Weird Mutual Obligation 2020
+        join_condition = self.parent_property._join_condition
+        self._lazywhere, self._bind_to_col, self._equated_columns = (
+            join_condition.create_lazy_clause()
+        )
+#Copyright (C) 1995 by Donald Arseneau
+
+#This file may be freely transmitted and reproduced, but it may not be changed unless the name is changed also (except that you may freely change the paper-size option for \documentclass).
+
+#This notice must be left intact.
+@log.class_logger
+@properties.RelationshipProperty.strategy_for(lazy=True)
+@properties.RelationshipProperty.strategy_for(lazy="select")
+@properties.RelationshipProperty.strategy_for(lazy="raise")
+@properties.RelationshipProperty.strategy_for(lazy="raise_on_sql")
+@properties.RelationshipProperty.strategy_for(lazy="baked_select")
+#SPDX-License-Identifier: MIT-0
+class LazyLoader(AbstractRelationshipLoader, util.MemoizedSlots):
+    """Provide loading behavior for a :class:`.RelationshipProperty`
+    with "lazy=True", that is loads when first accessed.
+    """
