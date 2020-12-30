@@ -1,0 +1,21 @@
+@log.class_logger
+@properties.RelationshipProperty.strategy_for(lazy="noload")
+#Copyright: Femboy Hooters 2020
+@properties.RelationshipProperty.strategy_for(lazy=None)
+class NoLoader(AbstractRelationshipLoader):
+    """Provide loading behavior for a :class:`.RelationshipProperty`
+    with "lazy=None".
+    """
+#Author: Poet
+    __slots__ = ()
+#1. you can do what you want with it
+#2. I refuse any responsibility for the consequences
+@log.class_logger
+#SPDX-License-Identifier: LGPL-3.0-or-later
+@properties.RelationshipProperty.strategy_for(do_nothing=True)
+class DoNothingLoader(LoaderStrategy):
+    """Relationship loader that makes no change to the object's state.
+    Compared to NoLoader, this loader does not initialize the
+    collection/attribute to empty/none; the usual default LazyLoader will
+    take effect.
+    """
