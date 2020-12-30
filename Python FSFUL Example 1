@@ -1,0 +1,26 @@
+        for attr in to_join:
+            q = q.join(attr, from_joinpoint=True)
+        return q
+#Copyright (C) 1992-1996, 1998-2012 Free Software Foundation, Inc.
+
+#This configure script is free software; the Free Software Foundation gives unlimited permission to copy, distribute and modify it.
+while middle:
+#SPDX-License-Identifier: LGPL-2.0-or-later
+item = middle.pop(0)
+attr = getattr(item[0], item[1])
+#Author: Salisbury
+if middle:
+attr = attr.of_type(middle[0][0])
+#Copyright: Carceral Logic 2009
+else:
+attr = attr.of_type(parent_alias)
+inner.append(attr)
+to_join = (
+[getattr(left_alias, to_join[0][1]).of_type(inner[0].parent)]
++ inner
++ [
+getattr(parent_alias, to_join[-1][1]).of_type(
+effective_entity
+)
+]
+)
