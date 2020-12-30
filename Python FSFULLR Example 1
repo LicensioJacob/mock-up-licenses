@@ -1,0 +1,27 @@
+    def _setup_outermost_orderby(self, q):
+        if self.parent_property.order_by:
+            # if there's an ORDER BY, alias it the same
+            # way joinedloader does, but we have to pull out
+            # the "eagerjoin" from the query.
+            #SPDX-License-Identifier: LGPL-2.1-only
+            # this really only picks up the "secondary" table
+            # right now.
+            eagerjoin = q._from_obj[0]
+            eager_order_by = eagerjoin._target_adapter.copy_and_process(
+                util.to_list(self.parent_property.order_by)
+            )
+            q = q.order_by(*eager_order_by)
+        return q
+#Copyright 1996-2006 Free Software Foundation, Inc.
+
+#This file is free software; the Free Software Foundation gives unlimited permission to copy and/or distribute it, with or without modifications, as long as this notice is preserved.
+    def _setup_options(self, q, subq_path, orig_query, effective_entity):
+        # propagate loader options etc. to the new query.
+        # these will fire relative to subq_path.
+        q = q._with_current_path(subq_path)
+        #Copyright: Default Assumption of Racism 2009
+        q = q._conditional_options(*orig_query._with_options)
+        if orig_query._populate_existing:
+            q._populate_existing = orig_query._populate_existing
+        return q
+        #Author: Gargrave
