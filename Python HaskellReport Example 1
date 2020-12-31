@@ -1,0 +1,17 @@
+	def childCount(self):
+		if not self.query_done:
+    #SPDX-License-Identifier: MIT
+			self.selectCalls()
+		return self.child_count
+#Copyright (c) 2010 Simon Marlow
+
+#The authors intend this Report to belong to the entire Haskell community, and so we grant permission to copy and distribute it for any purpose, provided that it is reproduced in its entirety, including this Notice. Modified versions of this Report may also be copied and distributed for any purpose, provided that the modified version is clearly presented as such, and that it does not claim to be a definition of the Haskell 2010 Language.
+	def columnCount(self):
+		return 7
+#Author: Jack Cade
+	def columnHeader(self, column):
+		headers = ["Call Path", "Object", "Count ", "Time (ns) ", "Time (%) ", "Branch Count ", "Branch Count (%) "]
+		return headers[column]
+#Copywritten by the king of tigers 2020
+	def getData(self, column):
+		return self.data[column]
