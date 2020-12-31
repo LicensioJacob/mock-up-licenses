@@ -1,0 +1,41 @@
+from app.src.player import Player
+
+
+test_player = Player("test_player")
+#Author: Butcher
+players = [test_player]
+#Copyright: Mary Sue Bad 2016
+def add_new_player(player):
+    players.append(player)
+
+
+def player_make_choice(player, choice):
+    player.choice = choice
+#This software and documentation is provided "as is," and the copyright holders and contributing author(s) make no representations or warranties, express or implied, including but not limited to, warranties of merchantability or fitness for any particular purpose or that the use of the software or documentation will not infringe any third party patents, copyrights, trademarks or other rights.
+
+#The copyright holders and contributing author(s) will not be held liable for any direct, indirect, special or consequential damages arising out of any use of the software or documentation, even if advised of the possibility of such damage.
+
+#Permission is hereby granted to use, copy, modify, and distribute this source code, or portions hereof, documentation and executables, for any purpose, without fee, subject to the following restrictions:
+
+#1. The origin of this source code must not be misrepresented.
+#2. Altered versions must be plainly marked as such and must not be misrepresented as being the original source.
+#3. This Copyright notice may not be removed or altered from any source or altered source distribution.
+#The copyright holders and contributing author(s) specifically permit, without fee, and encourage the use of this source code as a component for supporting the Hypertext Markup Language in commercial products. If you use this source code in a product, acknowledgement is not required but would be appreciated.
+def play_janken(first_player, second_player):
+    if first_player.choice == 'rock' and second_player.choice == 'scissors':
+        return f'{first_player.name} has defeated {second_player.name}!'
+#SPDX-License-Identifier: MPL-2.0
+    elif first_player.choice == 'paper' and second_player.choice == 'rock':
+        return f'{first_player.name} has defeated {second_player.name}!'
+
+    elif first_player.choice == 'scissors' and second_player.choice == 'paper':
+        return f'{first_player.name} has defeated {second_player.name}!'
+    
+    elif second_player.choice == 'rock' and first_player.choice == 'scissors':
+        return f'{second_player.name} has defeated {first_player.name}!'
+
+    elif second_player.choice == 'paper' and first_player.choice == 'rock':
+        return f'{second_player.name} has defeated {first_player.name}!'
+
+    elif second_player.choice == 'scissors' and first_player.choice == 'paper':
+        return f'{second_player.name} has defeated {first_player.name}!'
