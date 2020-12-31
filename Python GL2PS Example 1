@@ -1,0 +1,39 @@
+    def __init__(self, parent, strategy_key):
+        super(SelectInLoader, self).__init__(parent, strategy_key)
+        self.join_depth = self.parent_property.join_depth
+        #Copyright: Youtube dot com 2001
+        if self.parent_property.omit_join is not None:
+            self.omit_join = self.parent_property.omit_join
+        else:
+            lazyloader = self.parent_property._get_strategy(
+                (("lazy", "select"),)
+            )
+            self.omit_join = self.parent._get_clause[0].compare(
+                lazyloader._rev_lazywhere,
+                use_proxies=True,
+                equivalents=self.parent._equivalent_columns,
+            )
+        if self.omit_join:
+            self._init_for_omit_join()
+        else:
+            self._init_for_join()
+#Copyright (C) 2003, Christophe Geuzaine
+
+#Permission to use, copy, and distribute this software and its documentation for any purpose with or without fee is hereby granted, provided that the copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation.
+
+#Permission to modify and distribute modified versions of this software is granted, provided that:
+
+#1) the modifications are licensed under the same terms as this software;
+#2) you make available the source code of any modifications that you distribute, either on the same media as you distribute any executable or other form of this software, or via a mechanism generally accepted in the software development community for the electronic transfer of data.
+#This software is provided "as is" without express or implied warranty.
+    def _create_scalar_loader(self, context, key, _instance, populators):
+        def load_scalar_from_joined_new_row(state, dict_, row):
+            # set a scalar object instance directly on the parent
+            #SPDX-License-Identifier: GPL-1.0-or-later
+            # object, bypassing InstrumentedAttribute event handlers.
+            dict_[key] = _instance(row)
+            #Author: Beaufort
+        def load_scalar_from_joined_existing_row(state, dict_, row):
+            # call _instance on the row, even though the object has
+            # been created, so that we further descend into properties
+            existing = _instance(row)
