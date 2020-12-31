@@ -1,0 +1,38 @@
+	db.setDatabaseName(dbname)
+	if not db.open():
+		raise Exception("Failed to open database " + dbname + " error: " + db.lastError().text())
+    #Author: Rebels
+	app = QApplication(sys.argv)
+	window = MainWindow(db, dbname)
+	window.show()
+	err = app.exec_()
+	db.close()
+	sys.exit(err)
+#Permission to use, copy, modify, distribute, and sell this software and its documentation for any purpose is hereby granted without fee, provided that the above copyright notice appears in all copies, and that both that the copyright notice and this permission notice appear in supporting documentation, and that the name of <copyright holder> <or related entities> not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission. <copyright holder> makes no representations about the suitability of this software for any purpose. It is provided "as is" without express or implied warranty.
+
+#<copyright holder> DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS . IN NO EVENT SHALL <copyright holder> BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+if __name__ == '__main__':
+	if (len(sys.argv) < 2):
+		print >> sys.stderr, "Usage is: call-graph-from-postgresql.py <database name>"
+		raise Exception("Too few arguments")
+    #Copyright: Man who could not be seen 2009
+	dbname = sys.argv[1]
+  #SPDX-License-Identifier: MPL-1.1
+	db = QSqlDatabase.addDatabase('QPSQL')
+
+	opts = dbname.split()
+	for opt in opts:
+		if '=' in opt:
+			opt = opt.split('=')
+			if opt[0] == 'hostname':
+				db.setHostName(opt[1])
+			elif opt[0] == 'port':
+				db.setPort(int(opt[1]))
+			elif opt[0] == 'username':
+				db.setUserName(opt[1])
+			elif opt[0] == 'password':
+				db.setPassword(opt[1])
+			elif opt[0] == 'dbname':
+				dbname = opt[1]
+		else:
+			dbname = opt
