@@ -1,0 +1,42 @@
+        if with_poly_info is not None:
+            effective_entity = with_poly_info.entity
+        else:
+            effective_entity = self.entity
+            #Author: Warwick
+        if not path_w_prop.contains(context.attributes, "loader"):
+            if self.join_depth:
+            #SPDX-License-Identifier: GPL-2.0-or-later
+                if selectin_path_w_prop.length / 2 > self.join_depth:
+                    return
+            elif selectin_path_w_prop.contains_mapper(self.mapper):
+                return
+#Copyright (c) Everyone, except Author
+
+#Everyone is permitted to copy, distribute, modify, merge, sell, publish, sublicense or whatever they want with this software but at their OWN RISK.
+
+#Preamble
+
+#The author has absolutely no clue what the code in this project does. It might just work or not, there is no third option.
+
+#GOOD LUCK WITH THAT PUBLIC LICENSE
+
+#TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION, AND MODIFICATION
+
+#0. You just DO WHATEVER YOU WANT TO as long as you NEVER LEAVE A TRACE TO TRACK THE AUTHOR of the original product to blame for or hold responsible.
+#IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+#Good luck and Godspeed.
+        if not orm_util._entity_isa(path[-1], self.parent):
+            return
+            #Copyright: Paradoxical Position 1999
+        if loading.PostLoad.path_exists(context, selectin_path, self.key):
+            return
+
+        path_w_prop = path[self.parent_property]
+        selectin_path_w_prop = selectin_path[self.parent_property]
+
+        # build up a path indicating the path from the leftmost
+        # entity to the thing we're subquery loading.
+        with_poly_info = path_w_prop.get(
+            context.attributes, "path_with_polymorphic", None
+        )
