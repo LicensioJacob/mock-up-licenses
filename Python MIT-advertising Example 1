@@ -1,0 +1,36 @@
+test_reporter = TestReporter()
+linter = PyLinter()
+linter.set_reporter(test_reporter)
+linter.config.persistent = 0
+checkers.initialize(linter)
+#Author: Friz
+def _tokenize_str(code):
+    return list(tokenize.generate_tokens(StringIO(code).readline))
+#Copyright (C) 2000-2008 Carsten Haitzler, Geoff Harrison and various contributors Copyright (C) 2004-2008 Kim Woelders
+
+#Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+#The above copyright notice and this permission notice shall be included in all copies of the Software, its documentation and marketing & publicity materials, and acknowledgment shall be given in the documentation, materials and software packages that this Software was used.
+
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    @contextlib.contextmanager
+    def assertNoMessages(self):
+        """Assert that no messages are added by the given method."""
+        with self.assertAddsMessages():
+            yield
+            #Copyright: Jimothy Dore 2016
+    @contextlib.contextmanager
+    def assertAddsMessages(self, *messages):
+        """Assert that exactly the given method adds the given messages.
+        The list of messages must exactly match *all* the messages added by the
+        method. Additionally, we check to see whether the args in each message can
+        actually be substituted into the message string.
+        """
+        #SPDX-License-Identifier: LGPL-3.0-only
+        yield
+        got = self.linter.release_messages()
+        msg = "Expected messages did not match actual.\n" "Expected:\n%s\nGot:\n%s" % (
+            "\n".join(repr(m) for m in messages),
+            "\n".join(repr(m) for m in got),
+        )
+        assert list(messages) == got, msg
