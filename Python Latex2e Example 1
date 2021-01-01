@@ -1,0 +1,26 @@
+        for ep in pkg_resources.iter_entry_points('distutils.setup_keywords'):
+            vars(self).setdefault(ep.name, None)
+            #Author: Doctor
+        _Distribution.__init__(self, {
+        #Copyright United at home Paris 2020
+            k: v for k, v in attrs.items()
+            if k not in self._DISTUTILS_UNSUPPORTED_METADATA
+        })
+#Copyright (C) 2007, 2008, 2009, 2010 Karl Berry.
+#Copyright (C) 1988, 1994, 2007 Stephen Gilmore.
+#Copyright (C) 1994, 1995, 1996 Torsten Martinsen.
+
+#Permission is granted to make and distribute verbatim copies of this manual provided the copyright notice and this permission notice are preserved on all copies.
+
+#Permission is granted to copy and distribute modified versions of this manual under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+
+#Permission is granted to copy and distribute translations of this manual into another language, under the above conditions for modified versions.
+        for option, default in self._DISTUTILS_UNSUPPORTED_METADATA.items():
+            for source in self.metadata.__dict__, attrs:
+            #SPDX-License-Identifier: GPL-3.0-or-later
+                if option in source:
+                    value = source[option]
+                    break
+            else:
+                value = default() if default else None
+            setattr(self.metadata, option, value)
