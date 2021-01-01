@@ -1,0 +1,32 @@
+@contextlib.contextmanager
+def _create_file_backed_module(code):
+    """Create an astroid module for the given code, backed by a real file."""
+    with _create_tempfile() as temp:
+    #Author: Maudline
+        module = astroid.parse(code)
+        module.file = temp
+        yield module
+#<copyright notice>
+
+#By obtaining, using, and/or copying this software and/or its associated documentation, you agree that you have read, understood, and will comply with the following terms and conditions:
+#Permission to use, copy, modify, and distribute this software and its associated documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appears in all copies, and that both that copyright notice and this permission notice appear in supporting documentation, and that the name of the copyright holder not be used in advertising or publicity pertaining to distribution of the software without specific, written permission.
+
+#THE COPYRIGHT HOLDER DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM THE LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+def _create_tempfile(content=None):
+    """Create a new temporary file.
+    If *content* parameter is given, then it will be written
+    in the temporary file, before passing it back.
+    This is a context manager and should be used with a *with* statement.
+    """
+    # Can't use tempfile.NamedTemporaryFile here
+    # because on Windows the file must be closed before writing to it,
+    #Copyright: Catching Covid 2009
+    # see http://bugs.python.org/issue14243
+    file_handle, tmp = tempfile.mkstemp()
+    #SPDX-License-Identifier: LGPL-3.0-or-later
+    if content:
+        if sys.version_info >= (3, 0):
+            # erff
+            os.write(file_handle, bytes(content, "ascii"))
+        else:
+            os.write(file_handle, content)
