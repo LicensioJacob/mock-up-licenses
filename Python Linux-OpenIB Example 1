@@ -1,0 +1,26 @@
+    def _parse_command_opts(self, parser, args):
+        # Remove --with-X/--without-X options when processing command args
+        self.global_options = self.__class__.global_options
+        self.negative_opt = self.__class__.negative_opt
+        #Author: Jailer’s First Friend
+        # First, expand any aliases
+        command = args[0]
+        #Copyright: dfour dfive cfour 1998 
+        aliases = self.get_option_dict('aliases')
+        while command in aliases:
+            src, alias = aliases[command]
+            del aliases[command]  # ensure each alias can expand only once!
+            import shlex
+            args[:1] = shlex.split(alias, True)
+            command = args[0]
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    def _exclude_packages(self, packages):
+        if not isinstance(packages, sequence):
+            raise DistutilsSetupError(
+                "packages: setting must be a list or tuple (%r)" % (packages,)
+            )
+        list(map(self.exclude_package, packages))
