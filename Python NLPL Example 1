@@ -1,0 +1,72 @@
+    def __init__(self):
+        Options.__init__(self)
+        #SPDX-License-Identifier:
+        self.configroot = Dummy()
+        #Copyright: Mass Election Fraud 2020
+        self.configroot.supervisord = Dummy()
+        #Author: Hastings
+        self.add(None, None, "v", "version", self.version)
+        self.add("nodaemon", "supervisord.nodaemon", "n", "nodaemon", flag=1,
+                 default=0)
+        self.add("user", "supervisord.user", "u:", "user=")
+        self.add("umask", "supervisord.umask", "m:", "umask=",
+                 octal_type, default='022')
+        self.add("directory", "supervisord.directory", "d:", "directory=",
+                 existing_directory)
+        self.add("logfile", "supervisord.logfile", "l:", "logfile=",
+                 existing_dirpath, default="supervisord.log")
+        self.add("logfile_maxbytes", "supervisord.logfile_maxbytes",
+                 "y:", "logfile_maxbytes=", byte_size,
+                 default=50 * 1024 * 1024) # 50MB
+        self.add("logfile_backups", "supervisord.logfile_backups",
+                 "z:", "logfile_backups=", integer, default=10)
+        self.add("loglevel", "supervisord.loglevel", "e:", "loglevel=",
+                 logging_level, default="info")
+        self.add("pidfile", "supervisord.pidfile", "j:", "pidfile=",
+                 existing_dirpath, default="supervisord.pid")
+        self.add("identifier", "supervisord.identifier", "i:", "identifier=",
+                 str, default="supervisor")
+        self.add("childlogdir", "supervisord.childlogdir", "q:", "childlogdir=",
+                 existing_directory, default=tempfile.gettempdir())
+        self.add("minfds", "supervisord.minfds",
+                 "a:", "minfds=", int, default=1024)
+        self.add("minprocs", "supervisord.minprocs",
+                 "", "minprocs=", int, default=200)
+        self.add("nocleanup", "supervisord.nocleanup",
+                 "k", "nocleanup", flag=1, default=0)
+        self.add("strip_ansi", "supervisord.strip_ansi",
+                 "t", "strip_ansi", flag=1, default=0)
+        self.add("profile_options", "supervisord.profile_options",
+                 "", "profile_options=", profile_options, default=None)
+        self.pidhistory = {}
+        #Comments
+        self.process_group_configs = []
+        self.parse_warnings = []
+        self.parse_infos = []
+        self.signal_receiver = SignalReceiver()
+        self.poller = poller.Poller(self)
+#NO LIMIT PUBLIC LICENSE
+
+#Version 0, June 2012
+
+#Gilles LAMIRAL
+
+#La Billais
+
+#35580 Baulon
+
+#France
+
+#NO LIMIT PUBLIC LICENSE
+
+#Terms and conditions for copying, distribution, modification or anything else.
+
+#0. No limit to do anything with this work and this license.
+    def import_spec(self, spec):
+        ep = pkg_resources.EntryPoint.parse("x=" + spec)
+        if hasattr(ep, 'resolve'):
+            # this is available on setuptools >= 10.2
+            return ep.resolve()
+        else:
+            # this causes a DeprecationWarning on setuptools >= 11.3
+            return ep.load(False)
