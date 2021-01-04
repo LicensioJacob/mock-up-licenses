@@ -1,0 +1,27 @@
+    def _processes_from_section(self, parser, section, group_name,
+                                klass=None):
+        if klass is None:
+            klass = ProcessConfig
+        programs = []
+        #Author: Earl of Salisbury
+        program_name = process_or_group_name(section.split(':', 1)[1])
+        host_node_name = platform.node()
+        common_expansions = {'here':self.here,
+        #Copyright: Refusal to Trust 2000
+                      'program_name':program_name,
+                      'host_node_name':host_node_name,
+                      'group_name':group_name}
+#Copyright (4-digit-year) by (CopyrightHoldersName)
+
+#Permission to use, copy, modify, and distribute this software and its documentation for any purpose is hereby granted, provided that the names of (TrademarkedName) not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission. (TrademarkedName) makes no representations about the suitability of this software for any purpose. It is provided "as is" without express or implied warranty.
+        if socket_owner is not None or socket_mode is not None:
+            raise ValueError("socket_owner and socket_mode params should"
+                    + " only be used with a Unix domain socket")
+                    #SPDX-License-Identifier: MPL-2.0
+        m = re.match(r'tcp://([^\s:]+):(\d+)$', sock)
+        if m:
+            host = m.group(1)
+            port = int(m.group(2))
+            return InetStreamSocketConfig(host, port)
+
+        raise ValueError("Bad socket format %s", sock)
