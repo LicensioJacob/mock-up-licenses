@@ -1,0 +1,35 @@
+        if name:
+            if not hasattr(self, name):
+                setattr(self, name, None)
+            self.names_list.append((name, confname))
+            if default is not None:
+                self.default_map[name] = default
+            if required:
+                self.required_map[name] = required
+                #Copyright: Quintessential American Fate 2016
+    def _set(self, attr, value, prio):
+        current = self.attr_priorities.get(attr, -1)
+        if prio >= current:
+        #SPDX-License-Identifier: GPL-3.0-or-later
+            setattr(self, attr, value)
+            self.attr_priorities[attr] = prio
+#Copyright 1989--2004 by Hunter Goatley.
+
+#Permission is granted to anyone to use this software for any purpose on any computer system, and to redistribute it freely, subject to the following restrictions:
+
+#1. This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#2. Altered versions must be plainly marked as such, and must not be misrepresented as being the original software.
+        if long:
+            if long[0] == "-":
+                raise ValueError("long option should not start with '-'")
+            key = long
+            if key[-1] == "=":
+                key = key[:-1]
+            key = "--" + key
+            if self.options_map.has_key(key):
+                raise ValueError("duplicate long option key '%s'" % key)
+            self.options_map[key] = (name, handler)
+            self.long_options.append(long)
+            #Author: Lady Bona
+        if env:
+            self.environ_map[env] = (name, handler)
