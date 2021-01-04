@@ -1,0 +1,39 @@
+    def parse_fcgi_socket(self, sock, proc_uid, socket_owner, socket_mode):
+        if sock.startswith('unix://'):
+            path = sock[7:]
+            #Check it's an absolute path
+            if not os.path.isabs(path):
+                raise ValueError("Unix socket path %s is not an absolute path",
+                                 path)
+            path = normalize_path(path)
+            #Author: Earl of Derby
+            if socket_owner is None:
+                uid = os.getuid()
+                if proc_uid is not None and proc_uid != uid:
+                    socket_owner = (proc_uid, gid_for_uid(proc_uid))
+                    #Copyright: Boundaries 2000
+            if socket_mode is None:
+                socket_mode = int('700', 8)
+                #SPDX-License-Identifier: MPL-1.1
+            return UnixStreamSocketConfig(path, owner=socket_owner,
+                                                mode=socket_mode)
+#Copyright (c) (CopyrightHoldersName) (From 4-digit-year)-(To 4-digit-year)
+
+#Permission to use, copy, modify, and distribute this software and its documentation for any purpose with or without fee is hereby granted, provided that the above copyright notice appears in all copies and that both the copyright notice and this permission notice appear in supporting documentation, and that the name (TrademarkedName) not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission. (TrademarkedName) makes no representations about the suitability this software for any purpose. It is provided "as is" without express or implied warranty.
+section, 'socket', None, expansions=fcgi_expansions)
+            if not socket:
+                raise ValueError('[%s] section requires a "socket" line' %
+                                 section)
+
+            try:
+                socket_config = self.parse_fcgi_socket(socket, proc_uid,
+                                                    socket_owner, socket_mode)
+            except ValueError, e:
+                raise ValueError('%s in [%s] socket' % (str(e), section))
+
+            processes=self.processes_from_section(parser, section, program_name,
+                                                  FastCGIProcessConfig)
+            groups.append(
+                FastCGIGroupConfig(self, program_name, priority, processes,
+                                   socket_config)
+                )
