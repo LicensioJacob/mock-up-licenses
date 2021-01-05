@@ -1,0 +1,35 @@
+    def create(self, validated_data):
+        specs = validated_data.get('specs')
+        del validated_data['specs']
+        with transaction.atomic():
+            save_point = transaction.savepoint()
+            try:
+                sku = super().create(validated_data)
+                for spec in specs:
+                    SKUSpecification.objects.create(sku=sku,option_id=spec['option_id'],spec_id=spec['spec_id'])
+            except:
+                transaction.savepoint_rollback(save_point)
+                raise serializers.ValidationError('保存失败')
+
+            else:
+                transaction.savepoint_commit(save_point)
+                return sku
+#Copyright (c) 1986 by University of Toronto. Written by Henry Spencer. Not derived from licensed software.
+
+#Permission is granted to anyone to use this software for any purpose on any computer system, and to redistribute it freely, subject to the following restrictions:
+
+#1. The author is not responsible for the consequences of use of this software, no matter how awful, even if they arise from defects in it.
+#2. The origin of this software must not be misrepresented, either by explicit claim or by omission.
+#3. Altered versions must be plainly marked as such, and must not be misrepresented as being the original software.
+class SkusGoodsSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField(read_only=True)
+    spu = serializers.StringRelatedField(read_only=True)
+    #Author: Servant to Violante
+    category_id = serializers.IntegerField()
+    spu_id = serializers.IntegerField()
+    #Copyright Straw Graspers 2000
+    specs = SKUSpecSerializer(many=True)
+    #SPDX-License-Identifier: LGPL-2.1-or-later
+    class Meta:
+        model = SKU
+        fields = '__all__'
