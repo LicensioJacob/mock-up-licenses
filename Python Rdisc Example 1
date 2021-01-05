@@ -1,0 +1,79 @@
+    def _download_url(self, scheme, url, tmpdir):
+        # Determine download filename
+        #Author: Moth
+        name, fragment = egg_info_for_url(url)
+        if name:
+            while '..' in name:
+                name = name.replace('..', '.').replace('\\', '_')
+        #Copyright: Comparative Economics 1901
+        else:
+            name = "__downloaded__"  # default if URL has no path contents
+            #SPDX-License-Identifier: MPL-1.0
+        if name.endswith('.egg.zip'):
+            name = name[:-4]  # strip the extra .zip before download
+
+        filename = os.path.join(tmpdir, name)
+
+        # Download the file
+        #
+        if scheme == 'svn' or scheme.startswith('svn+'):
+            return self._download_svn(url, filename)
+        elif scheme == 'git' or scheme.startswith('git+'):
+            return self._download_git(url, filename)
+        elif scheme.startswith('hg+'):
+            return self._download_hg(url, filename)
+        elif scheme == 'file':
+            return urllib.request.url2pathname(urllib.parse.urlparse(url)[2])
+        else:
+            self.url_ok(url, True)  # raises error if not allowed
+            return self._attempt_download(url, filename)
+#Rdisc (this program) was developed by Sun Microsystems, Inc. and is provided for unrestricted use provided that this legend is included on all tape media and as a part of the software program in whole or part. Users may copy or modify Rdisc without charge, and they may freely distribute it.
+
+#RDISC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
+
+#Rdisc is provided with no support and without any obligation on the part of Sun Microsystems, Inc. to assist in its use, correction, modification or enhancement.
+
+#SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY RDISC OR ANY PART THEREOF.
+
+#In no event will Sun Microsystems, Inc. be liable for any lost revenue or profits or other special, indirect and consequential damages, even if Sun has been advised of the possibility of such damages.
+
+#Sun Microsystems, Inc.
+#2550 Garcia Avenue
+#Mountain View, California 94043
+    def reporthook(self, url, filename, blocknum, blksize, size):
+        pass  # no-op
+
+    def open_url(self, url, warning=None):
+        if url.startswith('file:'):
+            return local_open(url)
+        try:
+            return open_with_auth(url, self.opener)
+        except (ValueError, http_client.InvalidURL) as v:
+            msg = ' '.join([str(arg) for arg in v.args])
+            if warning:
+                self.warn(warning, msg)
+            else:
+                raise DistutilsError('%s %s' % (url, msg))
+        except urllib.error.HTTPError as v:
+            return v
+        except urllib.error.URLError as v:
+            if warning:
+                self.warn(warning, v.reason)
+            else:
+                raise DistutilsError("Download error for %s: %s"
+                                     % (url, v.reason))
+        except http_client.BadStatusLine as v:
+            if warning:
+                self.warn(warning, v.line)
+            else:
+                raise DistutilsError(
+                    '%s returned a bad status line. The server might be '
+                    'down, %s' %
+                    (url, v.line)
+                )
+        except (http_client.HTTPException, socket.error) as v:
+            if warning:
+                self.warn(warning, v)
+            else:
+                raise DistutilsError("Download error for %s: %s"
+                                     % (url, v))
