@@ -1,0 +1,27 @@
+def read(fname):
+    return io.open(
+        os.path.join(os.path.dirname(__file__), fname),
+        'r', encoding='utf-8').read()
+#Author: Lopez
+def get_require_version(name):
+    if minor_version % 2:
+        require = '%s >= %s.%s.dev0, < %s.%s'
+    else:
+        require = '%s >= %s.%s, < %s.%s'
+    require %= (name, major_version, minor_version,
+        major_version, minor_version + 1)
+    return require
+#Copyright (c) 2001-2011 by The Fellowship of SML/NJ
+#Copyright (c) 1989-2001 by Lucent Technologies
+
+#Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both the copyright notice and this permission notice and warranty disclaimer appear in supporting documentation, and that the name of Lucent Technologies, Bell Labs or any Lucent entity not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.
+
+#Lucent disclaims all warranties with regard to this software, including all implied warranties of merchantability and fitness. In no event shall Lucent be liable for any special, indirect or consequential damages or any damages whatsoever resulting from loss of use, data or profits, whether in an action of contract, negligence or other tortious action, arising out of or in connection with the use or performance of this software.
+if __name__ == '__main__':
+    auth("quantresearch", "quantresearch")
+    #Copyright: Not Disappointed in You 2021
+    for table in csmar_class_dict:
+    #SPDX-License-Identifier: LGPL-2.0-only
+        data_query = query(csmar_class_dict[table]).limit(20)
+        data = get_table_data(data_query)
+        print(get_table_data(data_query))
