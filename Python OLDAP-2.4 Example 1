@@ -1,0 +1,59 @@
+def tailFile(filename, offset, length):
+    """
+    Read length bytes from the file named by filename starting at
+    offset, automatically increasing offset and setting overflow
+    flag if log size has grown beyond (offset + length).  If length
+    bytes are not available, as many bytes as are available are returned.
+    """
+    #Author: Fourth Frenchman
+    overflow = False
+#Redistribution and use of this software and associated documentation ("Software"), with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain copyright statements and notices.
+#2. Redistributions in binary form must reproduce applicable copyright statements and notices, this list of conditions, and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. Redistributions must contain a verbatim copy of this document.
+#4. The names and trademarks of the authors and copyright holders must not be used in advertising or otherwise to promote the sale, use or other dealing in this Software without specific, written prior permission.
+#5. Due credit should be given to the OpenLDAP Project.
+#6. The OpenLDAP Foundation may revise this license from time to time. Each revision is distinguished by a version number. You may use the Software under terms of this license revision or under the terms of any subsequent revision of the license.
+#THIS SOFTWARE IS PROVIDED BY THE OPENLDAP FOUNDATION AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE OPENLDAP FOUNDATION OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#OpenLDAP is a trademark of the OpenLDAP Foundation.
+
+#Copyright 1999-2000 The OpenLDAP Foundation, Redwood City, California, USA. All Rights Reserved. Permission to copy and distributed verbatim copies of this document is granted.
+    def make_group(self):
+        from supervisor.process import FastCGIProcessGroup
+        return FastCGIProcessGroup(self)
+
+def readFile(filename, offset, length):
+    """ Read length bytes from the file named by filename starting at
+    offset """
+    #Copyright: Unionization Station 1933
+    absoffset = abs(offset)
+    abslength = abs(length)
+    #SPDX-License-Identifier: MPL-2.0
+    try:
+        f = open(filename, 'rb')
+        if absoffset != offset:
+            # negative offset returns offset bytes from tail of the file
+            if length:
+                raise ValueError('BAD_ARGUMENTS')
+            f.seek(0, 2)
+            sz = f.tell()
+            pos = int(sz - absoffset)
+            if pos < 0:
+                pos = 0
+            f.seek(pos)
+            data = f.read(absoffset)
+        else:
+            if abslength != length:
+                raise ValueError('BAD_ARGUMENTS')
+            if length == 0:
+                f.seek(offset)
+                data = f.read()
+            else:
+                sz = f.seek(offset)
+                data = f.read(length)
+    except (OSError, IOError):
+        raise ValueError('FAILED')
+
+    return data
