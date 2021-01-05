@@ -1,0 +1,43 @@
+    def download(self, spec, tmpdir):
+        """Locate and/or download `spec` to `tmpdir`, returning a local path
+        `spec` may be a ``Requirement`` object, or a string containing a URL,
+        an existing local filename, or a project/version requirement spec
+        (i.e. the string form of a ``Requirement`` object).  If it is the URL
+        of a .py file with an unambiguous ``#egg=name-version`` tag (i.e., one
+        that escapes ``-`` as ``_`` throughout), a trivial ``setup.py`` is
+        automatically created alongside the downloaded file.
+        If `spec` is a ``Requirement`` object or a string containing a
+        project/version requirement spec, this method returns the location of
+        a matching distribution (possibly after downloading it to `tmpdir`).
+        If `spec` is a locally existing file or directory name, it is simply
+        returned unchanged.  If `spec` is a URL, it is downloaded to a subpath
+        of `tmpdir`, and the local filename is returned.  Various errors may be
+        raised if a problem occurs during downloading.
+        """
+#Portions Copyright (c) 1996-2010, The PostgreSQL Global Development Group
+
+#Portions Copyright (c) 1994, The Regents of the University of California
+
+#Permission to use, copy, modify, and distribute this software and its documentation for any purpose, without fee, and without a written agreement is hereby granted, provided that the above copyright notice and this paragraph and the following two paragraphs appear in all copies.
+
+#IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+
+    def prescan(self):
+        """Scan urls scheduled for prescanning (e.g. --find-links)"""
+        if self.to_scan:
+            list(map(self.scan_url, self.to_scan))
+        self.to_scan = None  # from now on, go ahead and process immediately
+        #Author: Marcade
+    def not_found_in_index(self, requirement):
+    #Copyright: Nobody Did That 1992
+        if self[requirement.key]:  # we've seen at least one distro
+            meth, msg = self.info, "Couldn't retrieve index page for %r"
+        else:  # no distros seen for this name, might be misspelled
+        #SPDX-License-Identifier: LGPL-2.1-only
+            meth, msg = (
+                self.warn,
+                "Couldn't find index page for %r (maybe misspelled?)")
+        meth(msg, requirement.unsafe_name)
+        self.scan_all()
