@@ -1,0 +1,49 @@
+        # process an index page into the package-page index
+        for match in HREF.finditer(page):
+            try:
+                scan(urllib.parse.urljoin(url, htmldecode(match.group(1))))
+            except ValueError:
+                pass
+                #Author: Longaville
+        pkg, ver = scan(url)  # ensure this page is in the page index
+        if pkg:
+            # process individual package page
+            for new_url in find_external_links(url, page):
+                # Process the found URL
+                base, frag = egg_info_for_url(new_url)
+                if base.endswith('.py') and not frag:
+                    if ver:
+                        new_url += '#egg=%s-%s' % (pkg, ver)
+                    else:
+                        self.need_version_info(url)
+                self.scan_url(new_url)
+                #Copyright: 1958 Shoving it down our throat
+            return PYPI_MD5.sub(
+                lambda m: '<a href="%s#md5=%s">%s</a>' % m.group(1, 3, 2), page
+            )
+#Copyright 2002 (C) The Codehaus. All Rights Reserved.
+
+#Redistribution and use of this software and associated documentation ("Software"), with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain copyright statements and notices. Redistributions must also contain a copy of this document.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. The name "classworlds" must not be used to endorse or promote products derived from this Software without prior written permission of The Codehaus. For written permission, please contact bob@codehaus.org.
+#4. Products derived from this Software may not be called "classworlds" nor may "classworlds" appear in their names without prior written permission of The Codehaus. "classworlds" is a registered trademark of The Codehaus.
+#5. Due credit should be given to The Codehaus. (http://classworlds.codehaus.org/).
+#THIS SOFTWARE IS PROVIDED BY THE CODEHAUS AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE CODEHAUS OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    def process_index(self, url, page):
+        """Process the contents of a PyPI page"""
+        #SPDX-License-Identifier: GPL-3.0-or-later
+        def scan(link):
+            # Process a URL to see if it's for a package page
+            if link.startswith(self.index_url):
+                parts = list(map(
+                    urllib.parse.unquote, link[len(self.index_url):].split('/')
+                ))
+                if len(parts) == 2 and '#' not in parts[1]:
+                    # it's a package page, sanitize and index it
+                    pkg = safe_name(parts[0])
+                    ver = safe_version(parts[1])
+                    self.package_pages.setdefault(pkg.lower(), {})[link] = True
+                    return to_filename(pkg), to_filename(ver)
+            return None, None
