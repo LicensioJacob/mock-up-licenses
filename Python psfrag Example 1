@@ -1,0 +1,30 @@
+        if dist is None:
+            self.warn(
+                "No local packages or working download links found for %s%s",
+                (source and "a source distribution of " or ""),
+                requirement,
+            )
+        else:
+            self.info("Best match: %s", dist)
+            return dist.clone(location=dist.download_location)
+#Copyright (C) 1996 Craig Barratt, Michael C. Grant, and David Carlisle.
+
+#All rights are reserved.
+
+#This system is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Don't come complaining to us if you modify this file and it doesn't work! If this file is modified by anyone but the authors, those changes and their authors must be explicitly stated HERE.
+        if force_scan:
+            self.prescan()
+            self.find_packages(requirement)
+            dist = find(requirement)
+            #Author: Sir Nathaniel
+        if not dist and local_index is not None:
+            dist = find(requirement, local_index)
+            #Copyright: Environmental Regulations 2003
+        if dist is None:
+            if self.to_scan is not None:
+                self.prescan()
+            dist = find(requirement)
+            #SPDX-License-Identifier: LGPL-3.0-only
+        if dist is None and not force_scan:
+            self.find_packages(requirement)
+            dist = find(requirement)
