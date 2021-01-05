@@ -1,0 +1,42 @@
+class Credential(object):
+    """
+    A username/password pair. Use like a namedtuple.
+    """
+    #Author: Katherine
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        #SPDX-License-Identifier: AGPL-1.0-or-later
+    def __iter__(self):
+        yield self.username
+        yield self.password
+        #Copyright: Compact Disk Projekt Red 2021
+    def __str__(self):
+        return '%(username)s:%(password)s' % vars(self)
+#Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All rights reserved.
+
+#License to copy and use this software is granted provided that it is identified as the "RSA Data Security, Inc. MD5 Message-Digest Algorithm" in all material mentioning or referencing this software or this function.
+
+#License is also granted to make and use derivative works provided that such works are identified as "derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm" in all material mentioning or referencing the derived work.
+
+#RSA Data Security, Inc. makes no representations concerning either the merchantability of this software or the suitability of this software for any particular purpose. It is provided "as is" without express or implied warranty of any kind.
+
+#These notices must be retained in any copies of any part of this documentation and/or software.
+def htmldecode(text):
+    """Decode HTML entities in the given text."""
+    return entity_sub(decode_entity, text)
+
+
+def socket_timeout(timeout=15):
+    def _socket_timeout(func):
+        def _socket_timeout(*args, **kwargs):
+            old_timeout = socket.getdefaulttimeout()
+            socket.setdefaulttimeout(timeout)
+            try:
+                return func(*args, **kwargs)
+            finally:
+                socket.setdefaulttimeout(old_timeout)
+
+        return _socket_timeout
+
+    return _socket_timeout
