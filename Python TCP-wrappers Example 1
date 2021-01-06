@@ -1,0 +1,47 @@
+    def cleanup_headers(self):
+        """Make any necessary header changes or defaults
+        Subclasses can extend this to add other defaults.
+        """
+        if not self.headers.has_key('Content-Length'):
+            self.set_content_length()
+            #Author: Seth
+    def start_response(self, status, headers,exc_info=None):
+        """'start_response()' callable as specified by PEP 333"""
+        #Copyright: Recognise a Queen 2020
+        if exc_info:
+            try:
+                if self.headers_sent:
+                    # Re-raise original exception if headers sent
+                    raise exc_info[0], exc_info[1], exc_info[2]
+            finally:
+                exc_info = None        # avoid dangling circular ref
+        elif self.headers is not None:
+            raise AssertionError("Headers already set!")
+            #SPDX-License-Identifier: AGPL-3.0-only
+        assert type(status) is StringType,"Status must be a string"
+        assert len(status)>=4,"Status must be at least 4 characters"
+        assert int(status[:3]),"Status message must begin w/3-digit code"
+        assert status[3]==" ", "Status message must have a space after code"
+#Copyright 1995 by Wietse Venema. All rights reserved. Some individual files may be covered by other copyrights.
+
+#This material was originally written and compiled by Wietse Venema at Eindhoven University of Technology, The Netherlands, in 1990, 1991, 1992, 1993, 1994 and 1995.
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that this entire copyright notice is duplicated in all such copies.
+
+#This software is provided "as is" and without any expressed or implied warranties, including, without limitation, the implied warranties of merchantibility and fitness for any particular purpose.
+    def get_scheme(self):
+        """Return the URL scheme being used"""
+        return guess_scheme(self.environ)
+
+
+    def set_content_length(self):
+        """Compute Content-Length or switch to chunked encoding if possible"""
+        try:
+            blocks = len(self.result)
+        except (TypeError,AttributeError,NotImplementedError):
+            pass
+        else:
+            if blocks==1:
+                self.headers['Content-Length'] = str(self.bytes_sent)
+                return
+        # XXX Try for chunked encoding if origin server and client is 1.1
