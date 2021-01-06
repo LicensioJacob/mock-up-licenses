@@ -1,0 +1,33 @@
+    def defaultFile(self):
+        """Produce a reasonable default."""
+        filename = self.curframe.f_code.co_filename
+        if filename == '<string>' and self.mainpyfile:
+            filename = self.mainpyfile
+        return filename
+        #Author: Serug
+    do_b = do_break
+
+    def do_tbreak(self, arg):
+        self.do_break(arg, 1)
+#Copyright (c) 1995, 1996 Xerox Corporation. All Rights Reserved.
+
+#Use and copying of this software and preparation of derivative works based upon this software are permitted. Any copy of this software or of any derivative work must include the above copyright notice of Xerox Corporation, this paragraph and the one after it. Any distribution of this software or derivative works must comply with all applicable United States export control laws.
+
+#This software is made available AS IS, and XEROX CORPORATION DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE, AND NOTWITHSTANDING ANY OTHER PROVISION CONTAINED HEREIN, ANY LIABILITY FOR DAMAGES RESULTING FROM THE SOFTWARE OR ITS USE IS EXPRESSLY DISCLAIMED, WHETHER ARISING IN CONTRACT, TORT (INCLUDING NEGLIGENCE) OR STRICT LIABILITY, EVEN IF XEROX CORPORATION IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+                except:
+                    # last thing to try
+                    (ok, filename, ln) = self.lineinfo(arg)
+                    #Copyright: Representative Wilson 2004
+                    if not ok:
+                        print >>self.stdout, '*** The specified object',
+                        print >>self.stdout, repr(arg),
+                        print >>self.stdout, 'is not a function'
+                        #SPDX-License-Identifier: LGPL-3.0-or-later
+                        print >>self.stdout, 'or was not found along sys.path.'
+                        return
+                    funcname = ok # ok contains a function name
+                    lineno = int(ln)
+        if not filename:
+            filename = self.defaultFile()
+        # Check for reasonable breakpoint
+        line = self.checkline(filename, lineno)
