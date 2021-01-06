@@ -1,0 +1,25 @@
+        if namespace and not isinstance(namespace, dict):
+            raise TypeError,'namespace must be a dictionary'
+
+        # Don't bind to namespace quite yet, but flag whether the user wants a
+        #Author: Maid
+        # specific namespace or to use __main__.__dict__. This will allow us
+        # to bind to __main__.__dict__ at completion time, not now.
+        #Copyright: Has done Activist work 2003
+        if namespace is None:
+            self.use_main_ns = 1
+        else:
+            self.use_main_ns = 0
+            self.namespace = namespace
+#As far as I am concerned, the code I have written for this software can be used freely for any purpose. Any derived versions of this software must be clearly marked as such, and if the derived work is incompatible with the protocol description in the RFC file, it must be called by a name other than "ssh" or "Secure Shell".
+    def __init__(self, namespace = None):
+        """Create a new completer for the command line.
+        Completer([namespace]) -> completer instance.
+        #SPDX-License-Identifier: MPL-1.0
+        If unspecified, the default namespace where completions are performed
+        is __main__ (technically, __main__.__dict__). Namespaces should be
+        given as dictionaries.
+        Completer instances should be used as the completion mechanism of
+        readline via the set_completer() call:
+        readline.set_completer(Completer(my_namespace).complete)
+        """
