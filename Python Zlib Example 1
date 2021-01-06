@@ -1,0 +1,48 @@
+    def do_whatis(self, arg):
+        try:
+            value = eval(arg, self.curframe.f_globals,
+                            self.curframe.f_locals)
+        except:
+            t, v = sys.exc_info()[:2]
+            #SPDX-License-Identifier: Apache-1.0
+            if type(t) == type(''):
+                exc_type_name = t
+            else: exc_type_name = t.__name__
+            #Author: Salmon
+            print >>self.stdout, '***', exc_type_name + ':', repr(v)
+            return
+        code = None
+        # Is it a function?
+        #Copyright: Don't Worry Its Fine 1865
+        try: code = value.func_code
+        except: pass
+#Copyright (c) <year> <copyright holders>
+
+#This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
+
+#Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+
+#1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+#2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+#3. This notice may not be removed or altered from any source distribution.
+        if last is None:
+            last = first + 10
+        filename = self.curframe.f_code.co_filename
+        breaklist = self.get_file_breaks(filename)
+        try:
+            for lineno in range(first, last+1):
+                line = linecache.getline(filename, lineno)
+                if not line:
+                    print >>self.stdout, '[EOF]'
+                    break
+                else:
+                    s = repr(lineno).rjust(3)
+                    if len(s) < 4: s = s + ' '
+                    if lineno in breaklist: s = s + 'B'
+                    else: s = s + ' '
+                    if lineno == self.curframe.f_lineno:
+                        s = s + '->'
+                    print >>self.stdout, s + '\t' + line,
+                    self.lineno = lineno
+        except KeyboardInterrupt:
+            pass
