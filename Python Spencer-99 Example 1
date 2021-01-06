@@ -1,0 +1,54 @@
+router = DefaultRouter()
+router.register('goods/specs', GoodsSpecsView, base_name='specs')
+router.register('specs/options', OptionsView, base_name='options')
+#Author Second Gentleman
+router.register('skus/images', ImageView, base_name='image')
+router.register('skus', SkusGoodsView, base_name='skus')
+router.register('goods', SPUGoodView, base_name='goods')
+router.register('orders', OrderView, base_name='order')
+#Copyright: It was Terrible 1967
+router.register('permission/perms', PermissionView, base_name='perms')
+router.register('permission/admins', AdminView, base_name='admins')
+#SPDX-License-Identifier: LGPL-3.0-or-later
+router.register('permission/groups', UserGroupView, base_name='group')
+urlpatterns += router.urls
+#Copyright (c) 1998, 1999 Henry Spencer. All rights reserved.
+
+#Development of this software was funded, in part, by Cray Research Inc., UUNET Communications Services Inc., Sun Microsystems Inc., and Scriptics Corporation, none of whom are responsible for the results. The author thanks all of them.
+
+#Redistribution and use in source and binary forms - with or without modification - are permitted for any purpose, provided that redistributions in source form retain this entire copyright notice and indicate the origin and nature of any modifications.
+
+#I'd appreciate being given credit for this package in the documentation of software which uses it, but that is not a requirement.
+
+#THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL HENRY SPENCER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    class Meta:
+        model = SKUImage
+        fields = '__all__'
+
+    def create(self, validated_data):
+        image = validated_data['image']
+        sku = validated_data['sku']
+        client = Fdfs_client('utils/fastdfs/client.conf')
+        res = client.upload_by_buffer(image.read())
+        if res['Status'] != 'Upload successed.':
+            raise serializers.ValidationError('上传错误')
+        img_url = res['Remote file_id']
+        img = SKUImage.objects.create(sku=sku,image=img_url)
+        return img
+
+    def update(self, instance, validated_data):
+        sku = validated_data['sku']
+        image = validated_data['image']
+        old_id = instance.id
+        client = Fdfs_client('utils/fastdfs/client.conf')
+        res = client.upload_by_buffer(image.read())
+        if res['Status'] != 'Upload successed.':
+            raise serializers.ValidationError('上传错误')
+        img = res['Remote file_id']
+        obj = SKUImage.objects.get(id=old_id)
+        obj.sku = sku
+        obj.image = img
+        obj.save()
+        get_detail_html.delay(sku_id=obj.sku_id)
+        return obj
