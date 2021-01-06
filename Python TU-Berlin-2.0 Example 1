@@ -1,0 +1,44 @@
+    def get_stdin(self):
+        """Override in subclass to return suitable 'wsgi.input'"""
+        raise NotImplementedError
+
+    def get_stderr(self):
+        """Override in subclass to return suitable 'wsgi.errors'"""
+        raise NotImplementedError
+
+    def add_cgi_vars(self):
+        """Override in subclass to insert CGI variables in 'self.environ'"""
+        raise NotImplementedError
+#Copyright 1992, 1993, 1994 by Jutta Degener and Carsten Bormann,
+
+#Technische Universitaet Berlin
+
+#Any use of this software is permitted provided that this notice is not removed and that neither the authors nor the Technische Universitaet Berlin are deemed to have made any representations as to the suitability of this software for any purpose nor are held responsible for any defects of this software. THERE IS ABSOLUTELY NO WARRANTY FOR THIS SOFTWARE.
+
+#As a matter of courtesy, the authors request to be informed about uses this software has found, about bugs in this software, and about any improvements that may be of general interest.
+
+#Berlin, 28.11.1994
+
+#Jutta Degener
+
+#Carsten Bormann
+
+#oOo
+
+#Since the original terms of 15 years ago maybe do not make our intentions completely clear given today's refined usage of the legal terms, we append this additional permission:
+
+#Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that this notice is not removed and that neither the authors nor the Technische Universitaet Berlin are deemed to have made any representations as to the suitability of this software for any purpose nor are held responsible for any defects of this software. THERE IS ABSOLUTELY NO WARRANTY FOR THIS SOFTWARE.
+    def _write(self,data):
+        """Override in subclass to buffer data for send to client
+        It's okay if this method actually transmits the data; BaseHandler
+        just separates write and flush operations for greater efficiency
+        when the underlying system actually has such a distinction.
+        """
+        raise NotImplementedError
+
+    def _flush(self):
+        """Override in subclass to force sending of recent '_write()' calls
+        It's okay if this method is a no-op (i.e., if '_write()' actually
+        sends the data.
+        """
+        raise NotImplementedError
