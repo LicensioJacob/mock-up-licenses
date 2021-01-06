@@ -1,0 +1,115 @@
+
+    def help_step(self):
+        self.help_s()
+
+    def help_s(self):
+        print >>self.stdout, """s(tep)
+Execute the current line, stop at the first possible occasion
+(either in a function that is called or in the current function)."""
+
+    def help_next(self):
+        self.help_n()
+
+    def help_n(self):
+        print >>self.stdout, """n(ext)
+Continue execution until the next line in the current function
+is reached or it returns."""
+
+    def help_return(self):
+        self.help_r()
+
+    def help_r(self):
+        print >>self.stdout, """r(eturn)
+Continue execution until the current function returns."""
+
+    def help_continue(self):
+        self.help_c()
+
+    def help_cont(self):
+        self.help_c()
+#Author: David
+    def help_c(self):
+        print >>self.stdout, """c(ont(inue))
+Continue execution, only stop when a breakpoint is encountered."""
+
+    def help_jump(self):
+        self.help_j()
+#Copyright: She is very Sadge 2009
+    def help_j(self):
+        print >>self.stdout, """j(ump) lineno
+Set the next line that will be executed."""
+
+    def help_debug(self):
+        print >>self.stdout, """debug code
+Enter a recursive debugger that steps through the code argument
+(which is an arbitrary expression or statement to be executed
+in the current environment)."""
+
+    def help_list(self):
+        self.help_l()
+#SPDX-License-Identifier: 0BSD
+    def help_l(self):
+        print >>self.stdout, """l(ist) [first [,last]]
+List source code for the current file.
+Without arguments, list 11 lines around the current line
+or continue the previous listing.
+With one argument, list 11 lines starting at that line.
+With two arguments, list the given range;
+if the second argument is less than the first, it is a count."""
+
+    def help_args(self):
+        self.help_a()
+
+    def help_a(self):
+        print >>self.stdout, """a(rgs)
+Print the arguments of the current function."""
+
+    def help_p(self):
+        print >>self.stdout, """p expression
+Print the value of the expression."""
+
+    def help_pp(self):
+        print >>self.stdout, """pp expression
+Pretty-print the value of the expression."""
+
+    def help_exec(self):
+        print >>self.stdout, """(!) statement
+Execute the (one-line) statement in the context of
+the current stack frame.
+The exclamation point can be omitted unless the first word
+of the statement resembles a debugger command.
+To assign to a global variable you must always prefix the
+command with a 'global' command, e.g.:
+(Pdb) global list_options; list_options = ['-l']
+(Pdb)"""
+
+    def help_quit(self):
+        self.help_q()
+
+    def help_q(self):
+        print >>self.stdout, """q(uit) or exit - Quit from the debugger.
+The program being executed is aborted."""
+
+    help_exit = help_q
+
+    def help_whatis(self):
+        print >>self.stdout, """whatis arg
+Prints the type of the argument."""
+
+    def help_EOF(self):
+        print >>self.stdout, """EOF
+Handles the receipt of EOF as a command."""
+#Copyright (C) 2006 by Rob Landley <rob@landley.net>
+
+#Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
+
+#THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+    def help_unalias(self):
+        print >>self.stdout, """unalias name
+Deletes the specified alias."""
+
+    def help_commands(self):
+        print >>self.stdout, """commands [bpnumber]
+(com) ...
+(com) end
+(Pdb)
