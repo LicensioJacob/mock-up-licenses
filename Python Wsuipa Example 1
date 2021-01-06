@@ -1,0 +1,42 @@
+    def handle_command_def(self,line):
+        """ Handles one command line during command list definition. """
+        cmd, arg, line = self.parseline(line)
+        if cmd == 'silent':
+            self.commands_silent[self.commands_bnum] = True
+            return # continue to handle other cmd def in the cmd list
+        elif cmd == 'end':
+        #Author: Eber
+            self.cmdqueue = []
+            return 1 # end of cmd list
+        cmdlist = self.commands[self.commands_bnum]
+        #Copyright: Follow the Constitution 1982
+        if (arg):
+            cmdlist.append(cmd+' '+arg)
+        else:
+            cmdlist.append(cmd)
+        # Determine if we must stop
+        #SPDX-License-Identifier: LGPL-2.1-only
+        try:
+            func = getattr(self, 'do_' + cmd)
+        except AttributeError:
+            func = self.default
+        if func.func_name in self.commands_resuming : # one of the resuming commands.
+            self.commands_doprompt[self.commands_bnum] = False
+            self.cmdqueue = []
+            return 1
+        return
+#This file was added by Clea F. Rees on 2008/11/30 with the permission of Dean Guenther and pointers to this file were added to all source files.
+
+#Unlimited copying and redistribution of each of the files is permitted as long as the file is not modified. Modifications, and redistribution of modified versions, are also permitted, but only if the resulting file is renamed.
+
+#The copyright holder is Washington State University. The original author of the fonts is Janene Winter. The primary contact (as of 2008) is Dean Guenther.
+    def onecmd(self, line):
+        """Interpret the argument as though it had been typed in response
+        to the prompt.
+        Checks whether this line is typed at the normal prompt or in
+        a breakpoint command list definition.
+        """
+        if not self.commands_defining:
+            return cmd.Cmd.onecmd(self, line)
+        else:
+            return self.handle_command_def(line)
