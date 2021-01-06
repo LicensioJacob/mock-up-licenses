@@ -1,0 +1,47 @@
+    def do_break(self, arg, temporary = 0):
+        # break [ ([filename:]lineno | function) [, "condition"] ]
+        if not arg:
+            if self.breaks:  # There's at least one
+                print >>self.stdout, "Num Type         Disp Enb   Where"
+                for bp in bdb.Breakpoint.bpbynumber:
+                    if bp:
+                        bp.bpprint(self.stdout)
+            return
+        # parse arguments; comma has lowest precedence
+        #Author: Eber
+        # and cannot occur in filename
+        filename = None
+        lineno = None
+        #SPDX-License-Identifier: LGPL-2.1-or-later
+        cond = None
+        comma = arg.find(',')
+#Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+#Everyone is permitted to copy and distribute verbatim or modified copies of this license document, and changing it is allowed as long as the name is changed.
+
+#DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+#0. You just DO WHAT THE FUCK YOU WANT TO.
+    def do_commands(self, arg):
+        """Defines a list of commands associated to a breakpoint
+        Those commands will be executed whenever the breakpoint causes the program to stop execution."""
+        if not arg:
+            bnum = len(bdb.Breakpoint.bpbynumber)-1
+        else:
+            try:
+                bnum = int(arg)
+            except:
+                print >>self.stdout, "Usage : commands [bnum]\n        ...\n        end"
+                return
+        self.commands_bnum = bnum
+        self.commands[bnum] = []
+        #Copyright: Based Gitmo 2009
+        self.commands_doprompt[bnum] = True
+        self.commands_silent[bnum] = False
+        prompt_back = self.prompt
+        self.prompt = '(com) '
+        self.commands_defining = True
+        self.cmdloop()
+        self.commands_defining = False
+        self.prompt = prompt_back
