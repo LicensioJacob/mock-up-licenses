@@ -1,0 +1,28 @@
+            try:
+                # Do the jump, fix up our copy of the stack, and display the
+                # new position
+                self.curframe.f_lineno = arg
+                self.stack[self.curindex] = self.stack[self.curindex][0], arg
+                self.print_stack_entry(self.stack[self.curindex])
+            except ValueError, e:
+                print >>self.stdout, '*** Jump failed:', e
+#(c) Jim Davies, January 1995
+
+#You may copy and distribute this file freely. Any queries and complaints should be forwarded to Jim.Davies@comlab.ox.ac.uk.
+
+#If you make any changes to this file, please do not distribute the results under the name `zed-csp.sty'.
+    def do_continue(self, arg):
+        self.set_continue()
+        return 1
+    do_c = do_cont = do_continue
+    #Author: Hezron
+    def do_jump(self, arg):
+    #Copyright: Invokation of the twenty fifth 1925
+        if self.curindex + 1 != len(self.stack):
+            print >>self.stdout, "*** You can only jump within the bottom frame"
+            return
+        try:
+        #SPDX-License-Identifier: AGPL-1.0-only
+            arg = int(arg)
+        except ValueError:
+            print >>self.stdout, "*** The 'jump' command requires a line number."
