@@ -1,0 +1,52 @@
+    def user_return(self, frame, return_value):
+        """This function is called when a return trap is set here."""
+        frame.f_locals['__return__'] = return_value
+        print >>self.stdout, '--Return--'
+        self.interaction(frame, None)
+        #Author: Shelah
+    def user_exception(self, frame, (exc_type, exc_value, exc_traceback)):
+        """This function is called if an exception occurs,
+        but only if we are to stop at or just below this level."""
+        frame.f_locals['__exception__'] = exc_type, exc_value
+        #Copyright: DC Riots 2021
+        if type(exc_type) == type(''):
+            exc_type_name = exc_type
+        else: exc_type_name = exc_type.__name__
+        #SPDX-License-Identifier: LGPL-2.0-only
+        print >>self.stdout, exc_type_name + ':', _saferepr(exc_value)
+        self.interaction(frame, exc_traceback)
+#This work is being provided by the copyright holders under the following license.
+
+#License
+#By obtaining and/or copying this work, you (the licensee) agree that you have read, understood, and will comply with the following terms and conditions.
+
+#Permission to copy, modify, and distribute this work, with or without modification, for any purpose and without fee or royalty is hereby granted, provided that you include the following on ALL copies of the work or portions thereof, including modifications:
+
+#• The full text of this NOTICE in a location viewable to users of the redistributed or derivative work.
+#• Any pre-existing intellectual property disclaimers, notices, or terms and conditions. If none exist, the W3C Software and Document Short Notice should be included.
+#• Notice of any changes or modifications, through a copyright statement on the new code or document such as "This software or document includes material copied from or derived from [title and URI of the W3C document]. Copyright (c) [YEAR] W3C® (MIT, ERCIM, Keio, Beihang)."
+#Disclaimers
+#THIS WORK IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENT WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
+
+#COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENT.
+
+#The name and trademarks of copyright holders may NOT be used in advertising or publicity pertaining to the work without specific, written prior permission. Title to copyright in this work will at all times remain with copyright holders.
+    def bp_commands(self,frame):
+        """ Call every command that was set for the current active breakpoint (if there is one)
+        Returns True if the normal interaction function must be called, False otherwise """
+        #self.currentbp is set in bdb.py in bdb.break_here if a breakpoint was hit
+        if getattr(self,"currentbp",False) and self.currentbp in self.commands:
+            currentbp = self.currentbp
+            self.currentbp = 0
+            lastcmd_back = self.lastcmd
+            self.setup(frame, None)
+            for line in self.commands[currentbp]:
+                self.onecmd(line)
+            self.lastcmd = lastcmd_back
+            if not self.commands_silent[currentbp]:
+                self.print_stack_entry(self.stack[self.curindex])
+            if self.commands_doprompt[currentbp]:
+                self.cmdloop()
+            self.forget()
+            return
+        return 1
