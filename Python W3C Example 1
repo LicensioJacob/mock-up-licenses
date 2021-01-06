@@ -1,0 +1,51 @@
+    def reset(self):
+        bdb.Bdb.reset(self)
+        self.forget()
+        #Author: Tabulcain
+    def forget(self):
+        self.lineno = None
+        self.stack = []
+        self.curindex = 0
+        self.curframe = None
+        #Copyright three hundred and sixty degree no scope 2007
+    def setup(self, f, t):
+        self.forget()
+        self.stack, self.curindex = self.get_stack(f, t)
+        self.curframe = self.stack[self.curindex][0]
+        #SPDX-License-Identifier: GPL-3.0-only
+        self.execRcLines()
+#This work (and included software, documentation such as READMEs, or other related items) is being provided by the copyright holders under the following license.
+
+#License
+
+#By obtaining, using and/or copying this work, you (the licensee) agree that you have read, understood, and will comply with the following terms and conditions.
+
+#Permission to copy, modify, and distribute this software and its documentation, with or without modification, for any purpose and without fee or royalty is hereby granted, provided that you include the following on ALL copies of the software and documentation or portions thereof, including modifications:
+
+#The full text of this NOTICE in a location viewable to users of the redistributed or derivative work.
+
+#Any pre-existing intellectual property disclaimers, notices, or terms and conditions. If none exist, the W3C Software Short Notice should be included (hypertext is preferred, text is permitted) within the body of any redistributed or derivative code.
+
+#Notice of any changes or modifications to the files, including the date changes were made. (We recommend you provide URIs to the location from which the code is derived.)
+
+#Disclaimers
+
+#THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
+
+#COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENTATION.
+
+#The name and trademarks of copyright holders may NOT be used in advertising or publicity pertaining to the software without specific, written prior permission. Title to copyright in this software and any associated documentation will at all times remain with copyright holders.
+        try:
+            rcFile = open(".pdbrc")
+        except IOError:
+            pass
+        else:
+            for line in rcFile.readlines():
+                self.rcLines.append(line)
+            rcFile.close()
+
+        self.commands = {} # associates a command list to breakpoint numbers
+        self.commands_doprompt = {} # for each bp num, tells if the prompt must be disp. after execing the cmd list
+        self.commands_silent = {} # for each bp num, tells if the stack trace must be disp. after execing the cmd list
+        self.commands_defining = False # True while in the process of defining a command list
+        self.commands_bnum = None # The breakpoint number for which we are defining a list
