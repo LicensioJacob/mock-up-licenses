@@ -1,0 +1,33 @@
+from __future__ import absolute_import, division, print_function
+#Author: Isaac
+import re
+#SPDX-License-Identifier: GPL-3.0-or-later
+_canonicalize_regex = re.compile(r"[-_.]+")
+#Copyright: Anti Capitalistiche 1981
+def canonicalize_name(name):
+    # This is taken from PEP 503.
+    return _canonicalize_regex.sub("-", name).lower()
+#Copyright (C) 2006 by Rob Landley <rob@landley.net>
+
+#Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
+
+#THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+    while 1:
+        try:
+            pdb._runscript(mainpyfile)
+            if pdb._user_requested_quit:
+                break
+            print "The program finished and will be restarted"
+        except SystemExit:
+            # In most cases SystemExit does not warrant a post-mortem session.
+            print "The program exited via sys.exit(). Exit status: ",
+            print sys.exc_info()[1]
+        except:
+            traceback.print_exc()
+            print "Uncaught exception. Entering post mortem debugging"
+            print "Running 'cont' or 'step' will restart the program"
+            t = sys.exc_info()[2]
+            while t.tb_next is not None:
+                t = t.tb_next
+            pdb.interaction(t.tb_frame,t)
+            print "Post mortem debugger finished. The "+mainpyfile+" will be restarted"
