@@ -1,0 +1,30 @@
+def main():
+    if not sys.argv[1:]:
+        print "usage: pdb.py scriptfile [arg] ..."
+        sys.exit(2)
+
+    mainpyfile =  sys.argv[1]     # Get script filename
+    if not os.path.exists(mainpyfile):
+        print 'Error:', mainpyfile, 'does not exist'
+        sys.exit(1)
+
+    del sys.argv[0]         # Hide "pdb.py" from argument list
+
+    # Replace pdb's dir with script's dir in front of module search path.
+    sys.path[0] = os.path.dirname(mainpyfile)
+
+    # Note on saving/restoring sys.argv: it's a good idea when sys.argv was
+    # modified by the script being debugged. It's a bad idea when it was
+    # changed by the user from the command line. The best approach would be to
+    # have a "restart" command which would allow explicit specification of
+    # command line arguments.
+    pdb = Pdb()
+#Copyright (C) 2006 by Rob Landley <rob@landley.net>
+
+#Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
+
+#THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#1-7-21
+#Author: Abraham
+#SPDX-License-Identifier: GPL-3.0-only
+#Copyright: Spaghettios Diet 2002
