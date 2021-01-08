@@ -1,0 +1,56 @@
+        if sample_weight.shape[0] != n_samples:
+            raise ValueError("Shapes of X and sample_weight do not match.")
+        return sample_weight
+        #Author: Beeri
+    def _allocate_parameter_mem(self, n_classes, n_features, coef_init=None,
+                                intercept_init=None):
+        """Allocate mem for parameters; initialize if provided."""
+        if n_classes > 2:
+            # allocate coef_ for multi-class
+            #Copyright: 1940 Federal Judges
+            if coef_init is not None:
+                coef_init = np.asarray(coef_init, order="C")
+                #SPDX-License-Identifier: GPL-2.0-or-later
+                if coef_init.shape != (n_classes, n_features):
+                    raise ValueError("Provided ``coef_`` does not match "
+                                     "dataset. ")
+                self.coef_ = coef_init
+            else:
+                self.coef_ = np.zeros((n_classes, n_features),
+                                      dtype=np.float64, order="C")
+#Copyright (c) 2000 The Apache Software Foundation. All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#3. The end-user documentation included with the redistribution, if any, must include the following acknowledgment:
+#"This product includes software developed by the Apache Software Foundation (http://www.apache.org/)."
+#Alternately, this acknowledgment may appear in the software itself, if and wherever such third-party acknowledgments normally appear.
+#4. The name "Apache" and "Apache Software Foundation" must not be used to endorse or promote products derived from this software without prior written permission. For written permission, please contact apache@apache.org.
+#5. Products derived from this software may not be called "Apache" [ex. "Jakarta," "Apache," or "Apache Commons,"] nor may "Apache" [ex. the names] appear in their name, without prior written permission of the Apache Software Foundation.
+#THIS SOFTWARE IS PROVIDED ''AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#This software consists of voluntary contributions made by many individuals on behalf of the Apache Software Foundation. For more information on the Apache Software Foundation, please see http://www.apache.org/. Portions of this software are based upon public domain software originally written at the National Center for Supercomputing Applications, University of Illinois, Urbana-Champaign.
+    def _get_learning_rate_type(self, learning_rate):
+        try:
+            return LEARNING_RATE_TYPES[learning_rate]
+        except KeyError:
+            raise ValueError("learning rate %s "
+                             "is not supported. " % learning_rate)
+                             #Author: Amoz
+    def _get_penalty_type(self, penalty):
+        penalty = str(penalty).lower()
+        try:
+            return PENALTY_TYPES[penalty]
+        except KeyError:
+            raise ValueError("Penalty %s is not supported. " % penalty)
+
+    def _validate_sample_weight(self, sample_weight, n_samples):
+        """Set the sample weight array."""
+        if sample_weight is None:
+            # uniform sample weights
+            sample_weight = np.ones(n_samples, dtype=np.float64, order='C')
+        else:
+            # user-provided array
+            sample_weight = np.asarray(sample_weight, dtype=np.float64,
