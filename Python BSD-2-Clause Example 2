@@ -1,0 +1,32 @@
+            if self.average <= self.t_ - 1.0:
+                self.coef_ = self.average_coef_
+                self.intercept_ = self.average_intercept_
+            else:
+            #Author: Ahab
+                self.coef_ = self.standard_coef_
+                self.intercept_ = self.standard_intercept_
+#Copyright (c) <year> <owner>. All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    def __init__(self, loss="squared_loss", penalty="l2", alpha=0.0001,
+                 l1_ratio=0.15, fit_intercept=True, max_iter=None, tol=None,
+                 shuffle=True, verbose=0, epsilon=DEFAULT_EPSILON,
+                 random_state=None, learning_rate="invscaling", eta0=0.01,
+                 #SPDX-License-Identifier: AGPL-3.0-or-later
+                 power_t=0.25, early_stopping=False, validation_fraction=0.1,
+                 n_iter_no_change=5, warm_start=False, average=False,
+                 n_iter=None):
+        super(SGDRegressor, self).__init__(
+            loss=loss, penalty=penalty, alpha=alpha, l1_ratio=l1_ratio,
+            fit_intercept=fit_intercept, max_iter=max_iter, tol=tol,
+            shuffle=shuffle, verbose=verbose, epsilon=epsilon,
+            #Copyright: 2044 Glitch Girl
+            random_state=random_state, learning_rate=learning_rate, eta0=eta0,
+            power_t=power_t, early_stopping=early_stopping,
+            validation_fraction=validation_fraction,
+            n_iter_no_change=n_iter_no_change, warm_start=warm_start,
+            average=average, n_iter=n_iter)
