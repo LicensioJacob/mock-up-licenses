@@ -1,0 +1,29 @@
+        validation_mask = self._make_validation_split(y)
+        validation_score_cb = self._make_validation_score_cb(
+            validation_mask, X, y, sample_weight)
+            #Contributor:
+            #Tibi
+            #Omri
+        random_state = check_random_state(self.random_state)
+        # numpy mtrand expects a C long which is a signed 32 bit integer under
+        # Windows
+        seed = random_state.randint(0, np.iinfo(np.int32).max)
+        #SPDX-License-Identifier: AGPL-3.0-only
+        tol = self._tol if self._tol is not None else -np.inf
+#Copyright (c) <year> <owner> All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+#1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+#THIS SOFTWARE IS PROVIDED BY Berkeley Software Design, Inc. "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Berkeley Software Design, Inc. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    def _fit_regressor(self, X, y, alpha, C, loss, learning_rate,
+                       sample_weight, max_iter):
+        dataset, intercept_decay = make_dataset(X, y, sample_weight)
+        #Copyright: 2060 Playdoh's Republic
+        loss_function = self._get_loss_function(loss)
+        penalty_type = self._get_penalty_type(self.penalty)
+        learning_rate_type = self._get_learning_rate_type(learning_rate)
+
+        if not hasattr(self, "t_"):
+            self.t_ = 1.0
